@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Daily Journal — Autism Copilot</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Lexend',sans-serif;background:#0d1e18;color:#f0faf6;min-height:100dvh;}
+:root{--primary:#13ecb6;--bg:#0d1e18;--surface:#132b22;--surface-2:#1a3a2e;--border:#1f4a3a;--text-1:#f0faf6;--text-2:#9bbfb2;--text-3:#5a8a7a;--danger:#f87171;--success:#4ade80;--radius:.875rem;}
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;vertical-align:middle;line-height:1;}
+.fill-icon{font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;}
+.app{max-width:430px;margin:0 auto;min-height:100dvh;background:var(--bg);border-left:1px solid var(--border);border-right:1px solid var(--border);}
+.app-header{position:sticky;top:0;z-index:40;background:rgba(13,30,24,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:.875rem 1rem;gap:.5rem;}
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:rgba(13,30,24,.93);backdrop-filter:blur(16px);border-top:1px solid var(--border);display:flex;justify-content:space-around;align-items:center;padding:.5rem .5rem 1.4rem;z-index:50;}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:3px;padding:.3rem .6rem;color:var(--text-3);font-size:.625rem;font-weight:500;text-decoration:none;}
+.nav-item span{font-size:22px;}
+.nav-item.active{color:var(--primary);font-weight:700;}
+.nav-item.danger{color:var(--danger);}
+.mood-btn{display:flex;flex-direction:column;align-items:center;gap:.375rem;min-width:70px;padding:.75rem .5rem;border-radius:var(--radius);border:1.5px solid transparent;background:var(--surface);cursor:pointer;transition:border-color .2s,background .2s;}
+.mood-btn.selected{border-color:var(--primary);background:rgba(19,236,182,.06);}
+.mood-btn span.label{font-size:.7rem;font-weight:600;color:var(--text-3);}
+.mood-btn.selected span.label{color:var(--primary);}
+.activity-row{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:.875rem 1rem;}
+.thumb-btn{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:none;cursor:pointer;transition:background .15s;}
+.thumb-btn.up{background:var(--surface-2);color:var(--text-3);}
+.thumb-btn.up.active{background:rgba(19,236,182,.15);color:var(--primary);}
+.thumb-btn.down{background:var(--surface-2);color:var(--text-3);}
+.thumb-btn.down.active{background:rgba(248,113,113,.15);color:var(--danger);}
+.textarea{width:100%;background:transparent;border:none;outline:none;color:var(--text-1);font-family:'Lexend',sans-serif;font-size:.875rem;resize:none;min-height:90px;line-height:1.65;}
+.textarea::placeholder{color:var(--text-3);}
+.save-fab{position:fixed;bottom:6rem;right:1.25rem;display:flex;align-items:center;gap:.5rem;background:var(--success);color:#0d1e18;padding:.75rem 1.125rem;border-radius:9999px;font-family:'Lexend',sans-serif;font-weight:700;font-size:.825rem;border:none;cursor:pointer;box-shadow:0 4px 18px rgba(74,222,128,.3);}
+@keyframes slide-up{from{transform:translateY(14px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.anim-up{animation:slide-up .38s ease both;}
+.d1{animation-delay:.07s;}.d2{animation-delay:.14s;}.d3{animation-delay:.21s;}
+</style>
+</head>
+<body style="background:#0d1e18;">
+<div class="app">
+
+  <div class="app-header">
+    <a href="06-dashboard.html" style="width:36px;height:36px;border-radius:50%;background:rgba(19,236,182,.08);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--primary);text-decoration:none;">
+      <span class="material-symbols-outlined" style="font-size:20px;">arrow_back</span>
+    </a>
+    <h2 style="flex:1;text-align:center;font-size:1rem;font-weight:700;color:var(--text-1);">Daily Journal</h2>
+    <button style="width:36px;height:36px;border-radius:50%;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--primary);">
+      <span class="material-symbols-outlined" style="font-size:20px;">calendar_month</span>
+    </button>
+  </div>
+
+  <div style="overflow-y:auto;padding-bottom:7rem;">
+
+    <!-- Date nav -->
+    <div class="anim-up" style="padding:.875rem 1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:.75rem 1rem;">
+        <button style="background:none;border:none;cursor:pointer;color:var(--text-3);display:flex;align-items:center;">
+          <span class="material-symbols-outlined" style="font-size:22px;">chevron_left</span>
+        </button>
+        <div style="text-align:center;">
+          <p style="font-size:.72rem;color:var(--primary);font-weight:700;text-transform:uppercase;letter-spacing:.06em;">Today</p>
+          <p style="font-size:.95rem;font-weight:700;color:var(--text-1);">Tuesday, Oct 24</p>
+        </div>
+        <button style="background:none;border:none;cursor:pointer;color:var(--text-3);display:flex;align-items:center;">
+          <span class="material-symbols-outlined" style="font-size:22px;">chevron_right</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mood Selector -->
+    <div class="anim-up d1" style="padding:0 1rem .5rem;">
+      <p style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-3);margin-bottom:.75rem;display:flex;align-items:center;gap:.375rem;">
+        <span class="material-symbols-outlined" style="font-size:16px;">face</span> Leo's Mood Today
+      </p>
+      <div style="display:flex;gap:.625rem;overflow-x:auto;padding-bottom:.375rem;">
+        <button class="mood-btn selected" onclick="selectMood(this)"><span style="font-size:1.5rem;">😊</span><span class="label">Calm</span></button>
+        <button class="mood-btn" onclick="selectMood(this)"><span style="font-size:1.5rem;">⚡</span><span class="label">Energetic</span></button>
+        <button class="mood-btn" onclick="selectMood(this)"><span style="font-size:1.5rem;">😟</span><span class="label">Anxious</span></button>
+        <button class="mood-btn" onclick="selectMood(this)"><span style="font-size:1.5rem;">😫</span><span class="label">Fussy</span></button>
+        <button class="mood-btn" onclick="selectMood(this)"><span style="font-size:1.5rem;">😄</span><span class="label">Happy</span></button>
+      </div>
+    </div>
+
+    <!-- Activities -->
+    <div class="anim-up d2" style="padding:.875rem 1rem;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem;">
+        <p style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-3);display:flex;align-items:center;gap:.375rem;">
+          <span class="material-symbols-outlined" style="font-size:16px;">extension</span> Activities Today
+        </p>
+        <button style="font-size:.75rem;font-weight:700;color:var(--primary);background:none;border:none;cursor:pointer;">+ Add</button>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:.625rem;">
+
+        <div class="activity-row">
+          <div style="display:flex;align-items:center;gap:.75rem;">
+            <div style="width:40px;height:40px;border-radius:.625rem;background:rgba(74,222,128,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <span class="material-symbols-outlined" style="color:var(--success);font-size:20px;">waves</span>
+            </div>
+            <div>
+              <p style="font-size:.875rem;font-weight:700;color:var(--text-1);">Sensory Bin Exploration</p>
+              <p style="font-size:.7rem;color:var(--text-3);">20 min · Morning</p>
+            </div>
+          </div>
+          <div style="display:flex;gap:.375rem;">
+            <button class="thumb-btn up active"><span class="material-symbols-outlined" style="font-size:18px;">thumb_up</span></button>
+            <button class="thumb-btn down"><span class="material-symbols-outlined" style="font-size:18px;">thumb_down</span></button>
+          </div>
+        </div>
+
+        <div class="activity-row">
+          <div style="display:flex;align-items:center;gap:.75rem;">
+            <div style="width:40px;height:40px;border-radius:.625rem;background:rgba(96,165,250,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <span class="material-symbols-outlined" style="color:#60a5fa;font-size:20px;">menu_book</span>
+            </div>
+            <div>
+              <p style="font-size:.875rem;font-weight:700;color:var(--text-1);">Visual Storytelling</p>
+              <p style="font-size:.7rem;color:var(--text-3);">15 min · Afternoon</p>
+            </div>
+          </div>
+          <div style="display:flex;gap:.375rem;">
+            <button class="thumb-btn up"><span class="material-symbols-outlined" style="font-size:18px;">thumb_up</span></button>
+            <button class="thumb-btn down active"><span class="material-symbols-outlined" style="font-size:18px;">thumb_down</span></button>
+          </div>
+        </div>
+
+        <div class="activity-row">
+          <div style="display:flex;align-items:center;gap:.75rem;">
+            <div style="width:40px;height:40px;border-radius:.625rem;background:rgba(19,236,182,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <span class="material-symbols-outlined" style="color:var(--primary);font-size:20px;">draw</span>
+            </div>
+            <div>
+              <p style="font-size:.875rem;font-weight:700;color:var(--text-1);">Finger Painting</p>
+              <p style="font-size:.7rem;color:var(--text-3);">30 min · Evening</p>
+            </div>
+          </div>
+          <div style="display:flex;gap:.375rem;">
+            <button class="thumb-btn up"><span class="material-symbols-outlined" style="font-size:18px;">thumb_up</span></button>
+            <button class="thumb-btn down"><span class="material-symbols-outlined" style="font-size:18px;">thumb_down</span></button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Notes -->
+    <div class="anim-up d3" style="padding:0 1rem 1.5rem;">
+      <p style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-3);margin-bottom:.75rem;display:flex;align-items:center;gap:.375rem;">
+        <span class="material-symbols-outlined" style="font-size:16px;">edit_note</span> Observations & Notes
+      </p>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1rem;">
+        <textarea class="textarea" placeholder="e.g. Leo avoided loud noises today, really enjoyed the sensory bin, had a small transition struggle at lunch…"></textarea>
+        <div style="height:1px;background:var(--border);margin:.625rem 0;"></div>
+        <div style="display:flex;flex-wrap:wrap;gap:.5rem;">
+          <span style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;background:var(--surface-2);color:var(--text-3);padding:.2rem .625rem;border-radius:9999px;border:1px solid var(--border);">#noise-sensitive</span>
+          <span style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;background:var(--surface-2);color:var(--text-3);padding:.2rem .625rem;border-radius:9999px;border:1px solid var(--border);">#sensory-play</span>
+          <button style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;background:rgba(19,236,182,.1);color:var(--primary);padding:.2rem .625rem;border-radius:9999px;border:1px solid rgba(19,236,182,.2);cursor:pointer;font-family:'Lexend',sans-serif;">+ Tag</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Save FAB -->
+  <button class="save-fab">
+    <span class="material-symbols-outlined" style="font-size:18px;">check_circle</span>
+    Save Log
+  </button>
+
+  <nav class="bottom-nav">
+    <a class="nav-item" href="06-dashboard.html"><span class="material-symbols-outlined">home</span><span>Home</span></a>
+    <a class="nav-item" href="07-activity-generator.html"><span class="material-symbols-outlined">auto_awesome</span><span>Activities</span></a>
+    <a class="nav-item danger" href="08-meltdown-guide.html"><span class="material-symbols-outlined">emergency_home</span><span>Guide</span></a>
+    <a class="nav-item" href="09-ai-expert-chat.html"><span class="material-symbols-outlined">smart_toy</span><span>Expert</span></a>
+    <a class="nav-item active" href="#"><span class="material-symbols-outlined fill-icon">menu</span><span>More</span></a>
+  </nav>
+
+</div>
+<script>
+function selectMood(el){
+  document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('selected'));
+  el.classList.add('selected');
+}
+document.querySelectorAll('.thumb-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const row=btn.closest('.activity-row');
+    row.querySelectorAll('.thumb-btn').forEach(b=>{b.classList.remove('active');});
+    btn.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

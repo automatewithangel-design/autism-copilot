@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Goals & Challenges — Autism Copilot</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Lexend',sans-serif;background:#0d1e18;color:#f0faf6;min-height:100dvh;}
+:root{--primary:#13ecb6;--bg:#0d1e18;--surface:#132b22;--surface-2:#1a3a2e;--border:#1f4a3a;--text-1:#f0faf6;--text-2:#9bbfb2;--text-3:#5a8a7a;--radius:.875rem;}
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;vertical-align:middle;line-height:1;}
+.fill-icon{font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;}
+.app{max-width:430px;margin:0 auto;min-height:100dvh;background:var(--bg);border-left:1px solid var(--border);border-right:1px solid var(--border);display:flex;flex-direction:column;}
+.mesh-bg{background:radial-gradient(ellipse at 50% 0%,rgba(19,236,182,.09) 0%,transparent 50%),#0d1e18;}
+.progress-track{width:100%;height:6px;background:var(--surface-2);border-radius:9999px;overflow:hidden;}
+.progress-fill{height:100%;background:var(--primary);border-radius:9999px;}
+.goal-card{display:flex;align-items:center;gap:1rem;padding:1rem 1.125rem;border-radius:var(--radius);border:1.5px solid var(--border);background:var(--surface);cursor:pointer;transition:border-color .2s,background .2s;}
+.goal-card.selected{border-color:var(--primary);background:rgba(19,236,182,.06);}
+.goal-card:hover:not(.selected){border-color:var(--text-3);}
+.check-circle{width:26px;height:26px;border-radius:50%;background:var(--surface-2);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .2s,border-color .2s;}
+.goal-card.selected .check-circle{background:var(--primary);border-color:var(--primary);}
+.btn{display:flex;align-items:center;justify-content:center;gap:.5rem;border:none;border-radius:var(--radius);cursor:pointer;font-family:'Lexend',sans-serif;font-weight:700;transition:opacity .15s,transform .15s;}
+.btn:active{transform:scale(.97);opacity:.9;}
+.btn-primary{background:var(--primary);color:#0d1e18;box-shadow:0 4px 18px rgba(19,236,182,.28);}
+@keyframes slide-up{from{transform:translateY(18px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.anim-up{animation:slide-up .4s ease both;}
+.d1{animation-delay:.06s;}.d2{animation-delay:.12s;}.d3{animation-delay:.18s;}.d4{animation-delay:.24s;}.d5{animation-delay:.3s;}
+</style>
+</head>
+<body class="mesh-bg">
+<div class="app">
+
+  <!-- Header -->
+  <div style="padding:1.25rem 1rem .5rem;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+      <button onclick="history.back()" style="width:36px;height:36px;border-radius:50%;background:rgba(19,236,182,.08);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--primary);">
+        <span class="material-symbols-outlined" style="font-size:20px;">arrow_back</span>
+      </button>
+      <span style="font-size:.7rem;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.1em;">Step 3 of 3</span>
+      <div style="width:36px;"></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;">
+      <span style="font-size:.75rem;color:var(--text-3);">Goals & Support Areas</span>
+      <span style="font-size:.75rem;color:var(--primary);font-weight:700;">Almost done!</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" style="width:90%;"></div></div>
+  </div>
+
+  <!-- Hero -->
+  <div class="anim-up" style="padding:1.5rem 1.25rem .5rem;text-align:center;">
+    <div style="width:64px;height:64px;border-radius:50%;background:rgba(19,236,182,.12);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;">
+      <span class="material-symbols-outlined fill-icon" style="font-size:34px;color:var(--primary);">celebration</span>
+    </div>
+    <h1 style="font-size:1.6rem;font-weight:800;color:var(--text-1);line-height:1.2;">What are your goals?</h1>
+    <p style="font-size:.875rem;color:var(--text-2);margin-top:.5rem;line-height:1.65;">Select the areas where you need the most support. This personalises your AI expert.</p>
+  </div>
+
+  <!-- Goals list -->
+  <div style="flex:1;overflow-y:auto;padding:.75rem 1.25rem 8rem;display:flex;flex-direction:column;gap:.75rem;">
+
+    <div class="goal-card selected anim-up d1" onclick="toggleGoal(this)">
+      <div style="flex:1;">
+        <p style="font-weight:700;color:var(--text-1);">Handling Transitions</p>
+        <p style="font-size:.75rem;color:var(--text-3);margin-top:2px;">Moving between activities or places</p>
+      </div>
+      <div class="check-circle"><span class="material-symbols-outlined" style="font-size:14px;color:#0d1e18;font-weight:800;">check</span></div>
+    </div>
+
+    <div class="goal-card anim-up d2" onclick="toggleGoal(this)">
+      <div style="flex:1;">
+        <p style="font-weight:700;color:var(--text-1);">Social Interaction</p>
+        <p style="font-size:.75rem;color:var(--text-3);margin-top:2px;">Building connections and play skills</p>
+      </div>
+      <div class="check-circle"></div>
+    </div>
+
+    <div class="goal-card selected anim-up d3" onclick="toggleGoal(this)">
+      <div style="flex:1;">
+        <p style="font-weight:700;color:var(--text-1);">Picky Eating</p>
+        <p style="font-size:.75rem;color:var(--text-3);margin-top:2px;">Managing food sensitivities and variety</p>
+      </div>
+      <div class="check-circle"><span class="material-symbols-outlined" style="font-size:14px;color:#0d1e18;font-weight:800;">check</span></div>
+    </div>
+
+    <div class="goal-card anim-up d4" onclick="toggleGoal(this)">
+      <div style="flex:1;">
+        <p style="font-weight:700;color:var(--text-1);">Sleep Routines</p>
+        <p style="font-size:.75rem;color:var(--text-3);margin-top:2px;">Consistent bedtime and restful sleep</p>
+      </div>
+      <div class="check-circle"></div>
+    </div>
+
+    <div class="goal-card anim-up d5" onclick="toggleGoal(this)">
+      <div style="flex:1;">
+        <p style="font-weight:700;color:var(--text-1);">Communication</p>
+        <p style="font-size:.75rem;color:var(--text-3);margin-top:2px;">Verbal and non-verbal expression</p>
+      </div>
+      <div class="check-circle"></div>
+    </div>
+
+    <div class="goal-card anim-up d5" onclick="toggleGoal(this)">
+      <div style="flex:1;">
+        <p style="font-weight:700;color:var(--text-1);">Meltdown Management</p>
+        <p style="font-size:.75rem;color:var(--text-3);margin-top:2px;">De-escalation and prevention strategies</p>
+      </div>
+      <div class="check-circle"></div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div style="position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;padding:1rem 1.25rem 1.75rem;background:linear-gradient(to top,#0d1e18 60%,transparent);z-index:40;">
+    <a href="06-dashboard.html" style="text-decoration:none;display:block;">
+      <button class="btn btn-primary" style="width:100%;height:3.5rem;font-size:1rem;">
+        Finish & Setup Dashboard
+        <span class="material-symbols-outlined" style="font-size:18px;">arrow_forward</span>
+      </button>
+    </a>
+    <p style="text-align:center;font-size:.72rem;color:var(--text-3);margin-top:.75rem;">You can change these goals anytime in Settings.</p>
+  </div>
+
+</div>
+<script>
+function toggleGoal(el){
+  el.classList.toggle('selected');
+  const c=el.querySelector('.check-circle');
+  c.innerHTML=el.classList.contains('selected')?'<span class="material-symbols-outlined" style="font-size:14px;color:#0d1e18;font-weight:800;">check</span>':'';
+}
+</script>
+</body>
+</html>

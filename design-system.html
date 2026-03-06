@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Autism Copilot — Design System</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        primary:    "#13ecb6",
+        "primary-dark": "#0fc99a",
+        "bg-dark":  "#0d1e18",
+        "surface":  "#132b22",
+        "surface-2":"#1a3a2e",
+        "border":   "#1f4a3a",
+        "text-1":   "#f0faf6",
+        "text-2":   "#9bbfb2",
+        "text-3":   "#5a8a7a",
+        "danger":   "#f87171",
+        "warning":  "#fbbf24",
+        "info":     "#60a5fa",
+      },
+      fontFamily: { display: ["Lexend","sans-serif"] },
+      borderRadius: {
+        DEFAULT: "0.5rem", lg: "0.875rem", xl: "1.25rem",
+        "2xl": "1.5rem", "3xl": "2rem", full: "9999px"
+      },
+      boxShadow: {
+        glow:  "0 0 20px rgba(19,236,182,0.25)",
+        "glow-lg": "0 0 40px rgba(19,236,182,0.20)",
+        card:  "0 2px 12px rgba(0,0,0,0.4)",
+      }
+    }
+  }
+}
+</script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Lexend', sans-serif;
+    background: #0d1e18;
+    color: #f0faf6;
+    min-height: 100vh;
+  }
+
+  /* ── CSS Variables (copy these into every page) ── */
+  :root {
+    --primary:    #13ecb6;
+    --primary-dk: #0fc99a;
+    --bg:         #0d1e18;
+    --surface:    #132b22;
+    --surface-2:  #1a3a2e;
+    --border:     #1f4a3a;
+    --text-1:     #f0faf6;
+    --text-2:     #9bbfb2;
+    --text-3:     #5a8a7a;
+    --danger:     #f87171;
+    --warning:    #fbbf24;
+    --radius:     0.875rem;
+  }
+
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;
+    vertical-align: middle;
+  }
+  .fill-icon { font-variation-settings: 'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24; }
+
+  /* ── Card ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+  }
+  .card-2 {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+  }
+
+  /* ── Glow pulse on primary icon ── */
+  @keyframes pulse-glow {
+    0%,100% { box-shadow: 0 0 0 0 rgba(19,236,182,0.4); }
+    50%      { box-shadow: 0 0 0 8px rgba(19,236,182,0); }
+  }
+  .pulse { animation: pulse-glow 2.5s ease-in-out infinite; }
+
+  /* ── Breathing animation for meltdown ── */
+  @keyframes breathe {
+    0%,100% { transform: scale(1); opacity: 0.8; }
+    50%      { transform: scale(1.12); opacity: 1; }
+  }
+  .breathe { animation: breathe 4s ease-in-out infinite; }
+
+  /* ── Slide up entrance ── */
+  @keyframes slide-up {
+    from { transform: translateY(16px); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+  }
+  .slide-up { animation: slide-up 0.4s ease both; }
+  .delay-1  { animation-delay: 0.08s; }
+  .delay-2  { animation-delay: 0.16s; }
+  .delay-3  { animation-delay: 0.24s; }
+  .delay-4  { animation-delay: 0.32s; }
+
+  /* ── Bottom Nav ── */
+  .bottom-nav {
+    position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 100%; max-width: 430px;
+    background: rgba(13,30,24,0.92);
+    backdrop-filter: blur(16px);
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-around; align-items: center;
+    padding: 0.5rem 0.5rem 1.25rem;
+    z-index: 50;
+  }
+  .nav-item {
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    padding: 0.25rem 0.75rem;
+    color: var(--text-3); font-size: 10px; font-weight: 500;
+    cursor: pointer; border-radius: 0.75rem;
+    transition: color 0.2s, background 0.2s;
+    text-decoration: none;
+  }
+  .nav-item:hover { color: var(--text-2); }
+  .nav-item.active { color: var(--primary); font-weight: 700; }
+
+  /* ── Input ── */
+  .input {
+    width: 100%; height: 3.25rem;
+    background: var(--surface-2);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text-1); font-family: 'Lexend', sans-serif;
+    padding: 0 1rem; font-size: 0.9rem; outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(19,236,182,0.12); }
+  .input::placeholder { color: var(--text-3); }
+
+  /* ── Buttons ── */
+  .btn-primary {
+    display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+    width: 100%; height: 3.25rem;
+    background: var(--primary); color: #0d1e18;
+    font-family: 'Lexend', sans-serif; font-weight: 700; font-size: 0.95rem;
+    border: none; border-radius: var(--radius); cursor: pointer;
+    box-shadow: 0 4px 16px rgba(19,236,182,0.3);
+    transition: opacity 0.15s, transform 0.15s;
+  }
+  .btn-primary:active { transform: scale(0.97); opacity: 0.9; }
+
+  .btn-ghost {
+    display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+    height: 3.25rem; padding: 0 1.5rem;
+    background: transparent; color: var(--primary);
+    border: 1.5px solid var(--border);
+    font-family: 'Lexend', sans-serif; font-weight: 600; font-size: 0.9rem;
+    border-radius: var(--radius); cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .btn-ghost:hover { background: rgba(19,236,182,0.08); border-color: var(--primary); }
+
+  .btn-danger {
+    background: rgba(248,113,113,0.15);
+    color: var(--danger);
+    border: 1.5px solid rgba(248,113,113,0.3);
+  }
+
+  /* ── Tag / Chip ── */
+  .chip {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 0.25rem 0.75rem; border-radius: 9999px;
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+    background: rgba(19,236,182,0.12);
+    color: var(--primary); border: 1px solid rgba(19,236,182,0.2);
+  }
+  .chip-warning { background: rgba(251,191,36,0.12); color: var(--warning); border-color: rgba(251,191,36,0.2); }
+  .chip-danger  { background: rgba(248,113,113,0.12); color: var(--danger);  border-color: rgba(248,113,113,0.2); }
+
+  /* ── Progress bar ── */
+  .progress-track {
+    width: 100%; height: 6px; background: var(--surface-2);
+    border-radius: 9999px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; background: var(--primary);
+    border-radius: 9999px;
+    transition: width 0.5s ease;
+  }
+
+  /* ── Section title in DS page ── */
+  .ds-section {
+    margin-top: 3rem; padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--text-3);
+  }
+
+  /* ── Scrollbar ── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 9999px; }
+
+  /* ── App shell constraint ── */
+  .app-shell {
+    max-width: 430px; margin: 0 auto;
+    background: var(--bg);
+    min-height: 100vh; position: relative;
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+  }
+
+  /* ── Sticky header ── */
+  .app-header {
+    position: sticky; top: 0; z-index: 40;
+    background: rgba(13,30,24,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; padding: 0.875rem 1rem; gap: 0.75rem;
+  }
+
+  /* ── Gradient mesh background ── */
+  .mesh-bg {
+    background:
+      radial-gradient(ellipse at 20% 20%, rgba(19,236,182,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 80%, rgba(19,236,182,0.04) 0%, transparent 60%),
+      var(--bg);
+  }
+</style>
+</head>
+<body class="mesh-bg">
+
+<!-- ═══════════════════════════════════════════════════
+     DESIGN SYSTEM DOCUMENTATION PAGE
+════════════════════════════════════════════════════ -->
+<div style="max-width:860px; margin:0 auto; padding: 2rem 1.5rem 6rem;">
+
+  <!-- Header -->
+  <div style="margin-bottom:3rem;">
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;">
+      <div style="width:48px;height:48px;border-radius:14px;background:rgba(19,236,182,0.15);border:1px solid rgba(19,236,182,0.3);display:flex;align-items:center;justify-content:center;">
+        <span class="material-symbols-outlined fill-icon" style="color:var(--primary);font-size:26px;">diversity_4</span>
+      </div>
+      <div>
+        <h1 style="font-size:1.6rem;font-weight:800;color:var(--text-1);line-height:1.1;">Autism Copilot</h1>
+        <p style="font-size:0.8rem;color:var(--text-3);margin-top:2px;">Unified Design System · v1.0</p>
+      </div>
+    </div>
+    <p style="color:var(--text-2);font-size:0.9rem;line-height:1.6;max-width:540px;">
+      This document defines the single source of truth for all UI decisions across all 13 app screens. Apply these tokens, components, and patterns consistently.
+    </p>
+  </div>
+
+  <!-- ── 1. BRAND DECISIONS ── -->
+  <p class="ds-section">01 · Brand Decisions</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-top:1.5rem;">
+    <div class="card">
+      <p style="font-size:0.7rem;color:var(--text-3);font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.75rem;">Font</p>
+      <p style="font-size:1.5rem;font-weight:700;color:var(--text-1);">Lexend</p>
+      <p style="font-size:0.75rem;color:var(--text-2);margin-top:4px;">Chosen for readability under stress. Replaces Inter, Manrope, Plus Jakarta Sans.</p>
+    </div>
+    <div class="card">
+      <p style="font-size:0.7rem;color:var(--text-3);font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.75rem;">Theme</p>
+      <p style="font-size:1.5rem;font-weight:700;color:var(--primary);">Dark</p>
+      <p style="font-size:0.75rem;color:var(--text-2);margin-top:4px;">Calming for parents in stressful moments. Dark-first, system-aware.</p>
+    </div>
+    <div class="card">
+      <p style="font-size:0.7rem;color:var(--text-3);font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.75rem;">Tone</p>
+      <p style="font-size:1.5rem;font-weight:700;color:var(--text-1);">Calm+Clear</p>
+      <p style="font-size:0.75rem;color:var(--text-2);margin-top:4px;">No harsh reds or high-contrast jitters. Soft teal primary on deep forest background.</p>
+    </div>
+  </div>
+
+  <!-- ── 2. COLOR TOKENS ── -->
+  <p class="ds-section">02 · Color Tokens</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:0.75rem;margin-top:1.5rem;">
+    <div>
+      <div style="height:56px;border-radius:0.75rem;background:#13ecb6;margin-bottom:0.5rem;box-shadow:0 0 20px rgba(19,236,182,0.3);"></div>
+      <p style="font-size:0.75rem;font-weight:700;color:var(--text-1);">--primary</p>
+      <p style="font-size:0.7rem;color:var(--text-3);">#13ecb6</p>
+    </div>
+    <div>
+      <div style="height:56px;border-radius:0.75rem;background:#0d1e18;border:1px solid var(--border);margin-bottom:0.5rem;"></div>
+      <p style="font-size:0.75rem;font-weight:700;color:var(--text-1);">--bg</p>
+      <p style="font-size:0.7rem;color:var(--text-3);">#0d1e18</p>
+    </div>
+    <div>
+      <div style="height:56px;border-radius:0.75rem;background:#132b22;border:1px solid var(--border);margin-bottom:0.5rem;"></div>
+      <p style="font-size:0.75rem;font-weight:700;color:var(--text-1);">--surface</p>
+      <p style="font-size:0.7rem;color:var(--text-3);">#132b22</p>
+    </div>
+    <div>
+      <div style="height:56px;border-radius:0.75rem;background:#1a3a2e;border:1px solid var(--border);margin-bottom:0.5rem;"></div>
+      <p style="font-size:0.75rem;font-weight:700;color:var(--text-1);">--surface-2</p>
+      <p style="font-size:0.7rem;color:var(--text-3);">#1a3a2e</p>
+    </div>
+    <div>
+      <div style="height:56px;border-radius:0.75rem;background:#f0faf6;margin-bottom:0.5rem;"></div>
+      <p style="font-size:0.75rem;font-weight:700;color:var(--text-1);">--text-1</p>
+      <p style="font-size:0.7rem;color:var(--text-3);">#f0faf6</p>
+    </div>
+    <div>
+      <div style="height:56px;border-radius:0.75rem;background:#9bbfb2;margin-bottom:0.5rem;"></div>
+      <p style="font-size:0.75rem;font-weight:700;color:var(--text-1);">--text-2</p>
+      <p style="font-size:0.7rem;color:var(--text-3);">#9bbfb2</p>
+    </div>
+    <div>
+      <div style="height:56px;border-radius:0.75rem;background:#f87171;margin-bottom:0.5rem;"></div>
+      <p style="font-size:0.75rem;font-weight:700;color:var(--text-1);">--danger</p>
+      <p style="font-size:0.7rem;color:var(--text-3);">#f87171 · Meltdown</p>
+    </div>
+    <div>
+      <div style="height:56px;border-radius:0.75rem;background:#fbbf24;margin-bottom:0.5rem;"></div>
+      <p style="font-size:0.75rem;font-weight:700;color:var(--text-1);">--warning</p>
+      <p style="font-size:0.7rem;color:var(--text-3);">#fbbf24 · Alerts</p>
+    </div>
+  </div>
+
+  <!-- ── 3. TYPOGRAPHY ── -->
+  <p class="ds-section">03 · Typography Scale</p>
+  <div class="card" style="margin-top:1.5rem;display:flex;flex-direction:column;gap:1rem;">
+    <div style="display:flex;align-items:baseline;gap:1rem;border-bottom:1px solid var(--border);padding-bottom:1rem;">
+      <p style="font-size:2rem;font-weight:800;color:var(--text-1);min-width:180px;">Display</p>
+      <p style="font-size:0.75rem;color:var(--text-3);">2rem · 800 · Page titles, hero numbers</p>
+    </div>
+    <div style="display:flex;align-items:baseline;gap:1rem;border-bottom:1px solid var(--border);padding-bottom:1rem;">
+      <p style="font-size:1.4rem;font-weight:700;color:var(--text-1);min-width:180px;">Heading 1</p>
+      <p style="font-size:0.75rem;color:var(--text-3);">1.4rem · 700 · Section headers</p>
+    </div>
+    <div style="display:flex;align-items:baseline;gap:1rem;border-bottom:1px solid var(--border);padding-bottom:1rem;">
+      <p style="font-size:1.1rem;font-weight:600;color:var(--text-1);min-width:180px;">Heading 2</p>
+      <p style="font-size:0.75rem;color:var(--text-3);">1.1rem · 600 · Card titles, dialog headers</p>
+    </div>
+    <div style="display:flex;align-items:baseline;gap:1rem;border-bottom:1px solid var(--border);padding-bottom:1rem;">
+      <p style="font-size:0.9rem;font-weight:500;color:var(--text-1);min-width:180px;">Body</p>
+      <p style="font-size:0.75rem;color:var(--text-3);">0.9rem · 500 · Primary body text, labels</p>
+    </div>
+    <div style="display:flex;align-items:baseline;gap:1rem;border-bottom:1px solid var(--border);padding-bottom:1rem;">
+      <p style="font-size:0.8rem;font-weight:400;color:var(--text-2);min-width:180px;">Body Small</p>
+      <p style="font-size:0.75rem;color:var(--text-3);">0.8rem · 400 · Descriptions, hints</p>
+    </div>
+    <div style="display:flex;align-items:baseline;gap:1rem;">
+      <p style="font-size:0.65rem;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:0.1em;min-width:180px;">Label / Caption</p>
+      <p style="font-size:0.75rem;color:var(--text-3);">0.65rem · 700 · ALL CAPS · Nav labels, tags, timestamps</p>
+    </div>
+  </div>
+
+  <!-- ── 4. COMPONENTS ── -->
+  <p class="ds-section">04 · Core Components</p>
+
+  <!-- Buttons -->
+  <div style="margin-top:1.5rem;">
+    <p style="font-size:0.8rem;font-weight:600;color:var(--text-2);margin-bottom:0.75rem;">Buttons</p>
+    <div style="display:flex;flex-wrap:wrap;gap:0.75rem;align-items:center;">
+      <button class="btn-primary" style="width:auto;padding:0 1.5rem;">
+        <span class="material-symbols-outlined" style="font-size:18px;">auto_awesome</span>
+        Primary Action
+      </button>
+      <button class="btn-ghost">
+        <span class="material-symbols-outlined" style="font-size:18px;">arrow_forward</span>
+        Ghost Button
+      </button>
+      <button class="btn-ghost btn-danger" style="border-color:rgba(248,113,113,0.3);">
+        <span class="material-symbols-outlined" style="font-size:18px;">emergency_home</span>
+        Danger
+      </button>
+    </div>
+  </div>
+
+  <!-- Chips -->
+  <div style="margin-top:1.5rem;">
+    <p style="font-size:0.8rem;font-weight:600;color:var(--text-2);margin-bottom:0.75rem;">Status Chips</p>
+    <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
+      <span class="chip">Active Support</span>
+      <span class="chip">Analysed</span>
+      <span class="chip chip-warning">Processing</span>
+      <span class="chip chip-danger">Meltdown</span>
+    </div>
+  </div>
+
+  <!-- Cards -->
+  <div style="margin-top:1.5rem;">
+    <p style="font-size:0.8rem;font-weight:600;color:var(--text-2);margin-bottom:0.75rem;">Cards</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
+      <div class="card slide-up">
+        <p style="font-size:0.7rem;color:var(--text-3);font-weight:700;text-transform:uppercase;letter-spacing:0.08em;">Surface Card</p>
+        <p style="font-size:0.9rem;color:var(--text-1);margin-top:0.5rem;font-weight:600;">Activity Title</p>
+        <p style="font-size:0.75rem;color:var(--text-2);margin-top:4px;">Description text in body-small style.</p>
+      </div>
+      <div class="card-2 slide-up delay-1">
+        <p style="font-size:0.7rem;color:var(--text-3);font-weight:700;text-transform:uppercase;letter-spacing:0.08em;">Surface-2 Card</p>
+        <p style="font-size:0.9rem;color:var(--text-1);margin-top:0.5rem;font-weight:600;">Deeper Context</p>
+        <p style="font-size:0.75rem;color:var(--text-2);margin-top:4px;">Used for nested or secondary content.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Input -->
+  <div style="margin-top:1.5rem;">
+    <p style="font-size:0.8rem;font-weight:600;color:var(--text-2);margin-bottom:0.75rem;">Form Input</p>
+    <input class="input" placeholder="Child's name…" style="max-width:320px;"/>
+  </div>
+
+  <!-- Progress -->
+  <div style="margin-top:1.5rem;">
+    <p style="font-size:0.8rem;font-weight:600;color:var(--text-2);margin-bottom:0.75rem;">Progress Bar</p>
+    <div style="max-width:320px;">
+      <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+        <span style="font-size:0.7rem;color:var(--text-3);">Step 2 of 3</span>
+        <span style="font-size:0.7rem;color:var(--primary);font-weight:700;">66%</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" style="width:66%;"></div></div>
+    </div>
+  </div>
+
+  <!-- ── 5. BOTTOM NAV ── -->
+  <p class="ds-section">05 · Bottom Navigation (Unified — copy to every main screen)</p>
+  <div style="margin-top:1.5rem;position:relative;height:80px;background:var(--surface);border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);">
+    <nav style="position:absolute;bottom:0;left:0;right:0;display:flex;justify-content:space-around;align-items:center;padding:0.5rem 0 0.75rem;border-top:1px solid var(--border);">
+      <a class="nav-item active" href="#">
+        <span class="material-symbols-outlined fill-icon" style="font-size:22px;">home</span>
+        <span>Home</span>
+      </a>
+      <a class="nav-item" href="#">
+        <span class="material-symbols-outlined" style="font-size:22px;">auto_awesome</span>
+        <span>Activities</span>
+      </a>
+      <a class="nav-item" href="#" style="color:#f87171;">
+        <span class="material-symbols-outlined" style="font-size:22px;color:#f87171;">emergency_home</span>
+        <span style="color:#f87171;">Guide</span>
+      </a>
+      <a class="nav-item" href="#">
+        <span class="material-symbols-outlined" style="font-size:22px;">smart_toy</span>
+        <span>Expert</span>
+      </a>
+      <a class="nav-item" href="#">
+        <span class="material-symbols-outlined" style="font-size:22px;">menu</span>
+        <span>More</span>
+      </a>
+    </nav>
+  </div>
+  <div class="card" style="margin-top:0.75rem;">
+    <p style="font-size:0.8rem;color:var(--text-2);line-height:1.7;">
+      <strong style="color:var(--text-1);">Tab 1 – Home:</strong> Dashboard &nbsp;·&nbsp;
+      <strong style="color:var(--text-1);">Tab 2 – Activities:</strong> Activity Generator &nbsp;·&nbsp;
+      <strong style="color:var(--danger);">Tab 3 – Guide:</strong> Meltdown Support (danger-tinted, always visible) &nbsp;·&nbsp;
+      <strong style="color:var(--text-1);">Tab 4 – Expert:</strong> AI Expert Chat &nbsp;·&nbsp;
+      <strong style="color:var(--text-1);">Tab 5 – More:</strong> Journal, Insights, Reports, Profile
+    </p>
+  </div>
+
+  <!-- ── 6. PAGE HEADER ── -->
+  <p class="ds-section">06 · Page Header (Standard)</p>
+  <div style="margin-top:1.5rem;background:var(--surface);border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);">
+    <div class="app-header" style="position:relative;">
+      <button style="width:36px;height:36px;border-radius:50%;background:rgba(19,236,182,0.08);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <span class="material-symbols-outlined" style="color:var(--primary);font-size:20px;">arrow_back</span>
+      </button>
+      <h2 style="flex:1;text-align:center;font-size:1rem;font-weight:700;color:var(--text-1);">Screen Title</h2>
+      <div style="width:36px;"></div>
+    </div>
+  </div>
+
+  <!-- ── 7. SCREEN MAP ── -->
+  <p class="ds-section">07 · Screen Inventory & Fix Summary</p>
+  <div style="margin-top:1.5rem;display:flex;flex-direction:column;gap:0.5rem;">
+    <!-- Each screen row -->
+    <div style="display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:start;padding:0.875rem;background:var(--surface);border-radius:0.75rem;border:1px solid var(--border);">
+      <p style="font-weight:700;color:var(--text-1);font-size:0.85rem;">Login</p>
+      <p style="font-size:0.78rem;color:var(--text-2);">Change font → Lexend. Change colors → unified tokens. Swap blue primary → teal #13ecb6.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:start;padding:0.875rem;background:var(--surface);border-radius:0.75rem;border:1px solid var(--border);">
+      <p style="font-weight:700;color:var(--text-1);font-size:0.85rem;">Create Account</p>
+      <p style="font-size:0.78rem;color:var(--text-2);">Same as Login. Replace soft-gradient bg with mesh-bg pattern. Font → Lexend.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:start;padding:0.875rem;background:var(--surface);border-radius:0.75rem;border:1px solid var(--border);">
+      <p style="font-weight:700;color:var(--text-1);font-size:0.85rem;">Onboarding 1–3</p>
+      <p style="font-size:0.78rem;color:var(--text-2);">Already uses Lexend + teal. Minor: replace background-dark #10221d → #0d1e18. Use unified progress bar component.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:start;padding:0.875rem;background:var(--surface);border-radius:0.75rem;border:1px solid var(--border);">
+      <p style="font-weight:700;color:var(--text-1);font-size:0.85rem;">Home Dashboard</p>
+      <p style="font-size:0.78rem;color:var(--text-2);">Already strong. Unify bottom nav to 5-tab standard. FAB (+) → opens quick mood log.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:start;padding:0.875rem;background:var(--surface);border-radius:0.75rem;border:1px solid var(--border);">
+      <p style="font-weight:700;color:var(--text-1);font-size:0.85rem;">Activity Generator</p>
+      <p style="font-size:0.78rem;color:var(--text-2);">Already uses correct palette. Unify bottom nav to 5-tab standard.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:start;padding:0.875rem;background:rgba(248,113,113,0.06);border-radius:0.75rem;border:1px solid rgba(248,113,113,0.2);">
+      <p style="font-weight:700;color:var(--danger);font-size:0.85rem;">Meltdown Guide</p>
+      <p style="font-size:0.78rem;color:var(--text-2);">Already correct palette. Danger-tint the Guide nav tab. Unify bottom nav (currently only 4 items).</p>
+    </div>
+    <div style="display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:start;padding:0.875rem;background:var(--surface);border-radius:0.75rem;border:1px solid var(--border);">
+      <p style="font-weight:700;color:var(--text-1);font-size:0.85rem;">AI Expert Chat</p>
+      <p style="font-size:0.78rem;color:var(--text-2);">Correct palette. Bottom nav has wrong items — replace with 5-tab standard.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:start;padding:0.875rem;background:var(--surface);border-radius:0.75rem;border:1px solid var(--border);">
+      <p style="font-weight:700;color:var(--text-1);font-size:0.85rem;">Daily Journal</p>
+      <p style="font-size:0.78rem;color:var(--text-2);">Uses Plus Jakarta Sans → change to Lexend. Blue primary #306ee8 → teal. Replace nav with 5-tab standard.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:start;padding:0.875rem;background:var(--surface);border-radius:0.75rem;border:1px solid var(--border);">
+      <p style="font-weight:700;color:var(--text-1);font-size:0.85rem;">Insights & Trends</p>
+      <p style="font-size:0.78rem;color:var(--text-2);">Blue primary → teal. Font already Lexend. SVG chart color: #306ee8 → #13ecb6. Unify nav.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:start;padding:0.875rem;background:var(--surface);border-radius:0.75rem;border:1px solid var(--border);">
+      <p style="font-weight:700;color:var(--text-1);font-size:0.85rem;">Upload Report</p>
+      <p style="font-size:0.78rem;color:var(--text-2);">Blue primary → teal. Font already Lexend. Unify nav.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:start;padding:0.875rem;background:var(--surface);border-radius:0.75rem;border:1px solid var(--border);">
+      <p style="font-weight:700;color:var(--text-1);font-size:0.85rem;">Report Analysis</p>
+      <p style="font-size:0.78rem;color:var(--text-2);">Blue primary → teal. Font already Lexend. CTA card background → teal. Unify nav.</p>
+    </div>
+  </div>
+
+  <!-- ── 8. COPY-PASTE HEAD BLOCK ── -->
+  <p class="ds-section">08 · Standard HTML Head Block (copy into every page)</p>
+  <div style="margin-top:1.5rem;">
+    <pre style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;font-size:0.72rem;color:var(--text-2);overflow-x:auto;line-height:1.8;"><code>&lt;!-- STANDARD HEAD — Autism Copilot v1.0 --&gt;
+&lt;meta charset="utf-8"/&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"/&gt;
+&lt;script src="https://cdn.tailwindcss.com?plugins=forms"&gt;&lt;/script&gt;
+&lt;link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/&gt;
+&lt;link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/&gt;
+&lt;script&gt;
+tailwind.config = {
+  darkMode: "class",
+  theme: { extend: {
+    colors: {
+      primary:     "#13ecb6",
+      "bg-dark":   "#0d1e18",
+      "surface":   "#132b22",
+      "surface-2": "#1a3a2e",
+      "border-c":  "#1f4a3a",
+    },
+    fontFamily: { display: ["Lexend","sans-serif"] },
+  }}
+}
+&lt;/script&gt;
+&lt;style&gt;
+  body { font-family:'Lexend',sans-serif; background:#0d1e18; color:#f0faf6; }
+  :root {
+    --primary:#13ecb6; --bg:#0d1e18; --surface:#132b22;
+    --surface-2:#1a3a2e; --border:#1f4a3a;
+    --text-1:#f0faf6; --text-2:#9bbfb2; --text-3:#5a8a7a;
+    --danger:#f87171; --warning:#fbbf24;
+  }
+  .material-symbols-outlined {
+    font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;
+  }
+&lt;/style&gt;</code></pre>
+  </div>
+
+  <!-- ── 9. STANDARD BOTTOM NAV SNIPPET ── -->
+  <p class="ds-section">09 · Standard Bottom Nav HTML (copy into every main screen)</p>
+  <div style="margin-top:1.5rem;">
+    <pre style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;font-size:0.72rem;color:var(--text-2);overflow-x:auto;line-height:1.8;"><code>&lt;nav style="position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+  width:100%;max-width:430px;background:rgba(13,30,24,0.92);
+  backdrop-filter:blur(16px);border-top:1px solid #1f4a3a;
+  display:flex;justify-content:space-around;align-items:center;
+  padding:0.5rem 0.5rem 1.25rem;z-index:50;"&gt;
+  &lt;a href="/home"   class="nav-item [active?]"&gt;&lt;span class="material-symbols-outlined"&gt;home&lt;/span&gt;&lt;span&gt;Home&lt;/span&gt;&lt;/a&gt;
+  &lt;a href="/activities" class="nav-item"&gt;&lt;span class="material-symbols-outlined"&gt;auto_awesome&lt;/span&gt;&lt;span&gt;Activities&lt;/span&gt;&lt;/a&gt;
+  &lt;a href="/guide"  class="nav-item" style="color:#f87171"&gt;&lt;span class="material-symbols-outlined" style="color:#f87171"&gt;emergency_home&lt;/span&gt;&lt;span&gt;Guide&lt;/span&gt;&lt;/a&gt;
+  &lt;a href="/expert" class="nav-item"&gt;&lt;span class="material-symbols-outlined"&gt;smart_toy&lt;/span&gt;&lt;span&gt;Expert&lt;/span&gt;&lt;/a&gt;
+  &lt;a href="/more"   class="nav-item"&gt;&lt;span class="material-symbols-outlined"&gt;menu&lt;/span&gt;&lt;span&gt;More&lt;/span&gt;&lt;/a&gt;
+&lt;/nav&gt;</code></pre>
+  </div>
+
+  <!-- ── 10. ANIMATION CLASSES ── -->
+  <p class="ds-section">10 · Motion & Animation Reference</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-top:1.5rem;">
+    <div class="card slide-up" style="text-align:center;">
+      <div style="width:40px;height:40px;border-radius:50%;background:rgba(19,236,182,0.15);margin:0 auto 0.5rem;display:flex;align-items:center;justify-content:center;">
+        <span class="material-symbols-outlined" style="color:var(--primary);">arrow_upward</span>
+      </div>
+      <p style="font-size:0.8rem;font-weight:700;color:var(--text-1);">.slide-up</p>
+      <p style="font-size:0.7rem;color:var(--text-3);">Page entrance. Add .delay-1/2/3 for stagger.</p>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div class="breathe" style="width:40px;height:40px;border-radius:50%;background:rgba(19,236,182,0.15);margin:0 auto 0.5rem;display:flex;align-items:center;justify-content:center;">
+        <span class="material-symbols-outlined" style="color:var(--primary);">air</span>
+      </div>
+      <p style="font-size:0.8rem;font-weight:700;color:var(--text-1);">.breathe</p>
+      <p style="font-size:0.7rem;color:var(--text-3);">Meltdown breathing guide only.</p>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div class="pulse" style="width:40px;height:40px;border-radius:50%;background:rgba(19,236,182,0.2);margin:0 auto 0.5rem;display:flex;align-items:center;justify-content:center;">
+        <span class="material-symbols-outlined" style="color:var(--primary);">smart_toy</span>
+      </div>
+      <p style="font-size:0.8rem;font-weight:700;color:var(--text-1);">.pulse</p>
+      <p style="font-size:0.7rem;color:var(--text-3);">AI online status indicator only.</p>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

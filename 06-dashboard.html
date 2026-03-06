@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Home — Autism Copilot</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Lexend',sans-serif;background:#0d1e18;color:#f0faf6;min-height:100dvh;}
+:root{--primary:#13ecb6;--bg:#0d1e18;--surface:#132b22;--surface-2:#1a3a2e;--border:#1f4a3a;--text-1:#f0faf6;--text-2:#9bbfb2;--text-3:#5a8a7a;--danger:#f87171;--warning:#fbbf24;--info:#60a5fa;--radius:.875rem;}
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;vertical-align:middle;line-height:1;}
+.fill-icon{font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;}
+.app{max-width:430px;margin:0 auto;min-height:100dvh;background:var(--bg);border-left:1px solid var(--border);border-right:1px solid var(--border);}
+.mesh-bg{background:radial-gradient(ellipse at 15% 10%,rgba(19,236,182,.08) 0%,transparent 50%),radial-gradient(ellipse at 85% 60%,rgba(19,236,182,.04) 0%,transparent 50%),#0d1e18;}
+/* Header */
+.app-header{position:sticky;top:0;z-index:40;background:rgba(13,30,24,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:.875rem 1rem;gap:.75rem;}
+/* Bottom Nav */
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:rgba(13,30,24,.93);backdrop-filter:blur(16px);border-top:1px solid var(--border);display:flex;justify-content:space-around;align-items:center;padding:.5rem .5rem 1.4rem;z-index:50;}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:3px;padding:.3rem .6rem;color:var(--text-3);font-size:.625rem;font-weight:500;text-decoration:none;border-radius:.625rem;transition:color .2s;}
+.nav-item span{font-size:22px;}
+.nav-item.active{color:var(--primary);font-weight:700;}
+.nav-item.danger{color:var(--danger);}
+/* Cards */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1rem;}
+/* Quick action btn */
+.qa-btn{display:flex;flex-direction:column;align-items:center;gap:.5rem;padding:.875rem .5rem;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);cursor:pointer;transition:border-color .2s,background .2s;text-align:center;}
+.qa-btn:hover{border-color:var(--text-3);}
+.qa-btn:active{transform:scale(.96);}
+.btn{display:flex;align-items:center;justify-content:center;gap:.5rem;border:none;border-radius:var(--radius);cursor:pointer;font-family:'Lexend',sans-serif;font-weight:700;transition:opacity .15s,transform .15s;}
+.btn:active{transform:scale(.97);}
+.btn-primary{background:var(--primary);color:#0d1e18;box-shadow:0 4px 18px rgba(19,236,182,.28);}
+/* Activity log item */
+.log-item{display:flex;align-items:center;gap:.875rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:.875rem 1rem;}
+@keyframes slide-up{from{transform:translateY(14px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.anim-up{animation:slide-up .38s ease both;}
+.d1{animation-delay:.07s;}.d2{animation-delay:.14s;}.d3{animation-delay:.21s;}.d4{animation-delay:.28s;}
+</style>
+</head>
+<body class="mesh-bg">
+<div class="app">
+
+  <!-- Header -->
+  <div class="app-header">
+    <div style="width:38px;height:38px;border-radius:50%;background:rgba(19,236,182,.12);display:flex;align-items:center;justify-content:center;">
+      <span class="material-symbols-outlined fill-icon" style="color:var(--primary);font-size:20px;">diversity_4</span>
+    </div>
+    <h2 style="flex:1;font-size:1rem;font-weight:700;color:var(--text-1);">Autism Copilot</h2>
+    <button style="width:36px;height:36px;border-radius:50%;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-2);">
+      <span class="material-symbols-outlined" style="font-size:20px;">notifications</span>
+    </button>
+  </div>
+
+  <!-- Scrollable content -->
+  <div style="overflow-y:auto;padding-bottom:6rem;">
+
+    <!-- Welcome -->
+    <div class="anim-up" style="padding:1.25rem 1rem .5rem;display:flex;align-items:center;gap:1rem;">
+      <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,rgba(19,236,182,.3),rgba(96,165,250,.2));display:flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid rgba(19,236,182,.2);">
+        <span style="font-size:1.75rem;">🧒</span>
+      </div>
+      <div>
+        <p style="font-size:1.5rem;font-weight:800;color:var(--text-1);">Hi, Sarah!</p>
+        <p style="font-size:.875rem;color:var(--primary);font-weight:500;">Caring for Leo today</p>
+        <p style="font-size:.75rem;color:var(--text-3);margin-top:1px;">Monday, Oct 23</p>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="anim-up d1" style="padding:.75rem 1rem;">
+      <p style="font-size:.7rem;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.75rem;">Quick Actions</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.75rem;">
+        <a href="07-activity-generator.html" style="text-decoration:none;">
+          <div class="qa-btn">
+            <div style="width:40px;height:40px;border-radius:50%;background:rgba(19,236,182,.12);display:flex;align-items:center;justify-content:center;">
+              <span class="material-symbols-outlined" style="color:var(--primary);font-size:20px;">auto_awesome</span>
+            </div>
+            <span style="font-size:.72rem;font-weight:700;color:var(--text-1);line-height:1.2;">Generate<br/>Activity</span>
+          </div>
+        </a>
+        <a href="08-meltdown-guide.html" style="text-decoration:none;">
+          <div class="qa-btn" style="border-color:rgba(248,113,113,.25);background:rgba(248,113,113,.05);">
+            <div style="width:40px;height:40px;border-radius:50%;background:rgba(248,113,113,.12);display:flex;align-items:center;justify-content:center;">
+              <span class="material-symbols-outlined" style="color:var(--danger);font-size:20px;">emergency_home</span>
+            </div>
+            <span style="font-size:.72rem;font-weight:700;color:var(--text-1);line-height:1.2;">Meltdown<br/>Help</span>
+          </div>
+        </a>
+        <a href="09-ai-expert-chat.html" style="text-decoration:none;">
+          <div class="qa-btn">
+            <div style="width:40px;height:40px;border-radius:50%;background:rgba(96,165,250,.12);display:flex;align-items:center;justify-content:center;">
+              <span class="material-symbols-outlined" style="color:var(--info);font-size:20px;">smart_toy</span>
+            </div>
+            <span style="font-size:.72rem;font-weight:700;color:var(--text-1);line-height:1.2;">Ask<br/>Expert</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Suggested Activity Card -->
+    <div class="anim-up d2" style="padding:.25rem 1rem .5rem;">
+      <div style="border-radius:var(--radius);background:linear-gradient(135deg,rgba(19,236,182,.12),rgba(96,165,250,.08));border:1px solid rgba(19,236,182,.2);padding:1.25rem;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:-20px;right:-20px;width:80px;height:80px;border-radius:50%;background:rgba(19,236,182,.08);filter:blur(20px);"></div>
+        <div style="position:relative;z-index:1;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.875rem;">
+            <span style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;background:rgba(19,236,182,.15);color:var(--primary);padding:.2rem .6rem;border-radius:9999px;border:1px solid rgba(19,236,182,.2);">Suggested for Leo</span>
+            <span class="material-symbols-outlined fill-icon" style="color:var(--primary);font-size:20px;">lightbulb</span>
+          </div>
+          <h4 style="font-size:1.1rem;font-weight:800;color:var(--text-1);margin-bottom:.4rem;">Sensory Sandbox Play</h4>
+          <p style="font-size:.8rem;color:var(--text-2);line-height:1.6;margin-bottom:1rem;">A calming tactile activity to help Leo regulate after school. 20 minutes · Low energy.</p>
+          <a href="07-activity-generator.html" style="text-decoration:none;display:block;">
+            <button class="btn btn-primary" style="width:100%;height:2.75rem;font-size:.875rem;">
+              <span class="material-symbols-outlined" style="font-size:18px;">play_arrow</span>
+              Start Activity Guide
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Activities -->
+    <div class="anim-up d3" style="padding:.75rem 1rem;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.875rem;">
+        <p style="font-size:.95rem;font-weight:700;color:var(--text-1);">Recent Activities</p>
+        <a href="10-journal.html" style="font-size:.72rem;font-weight:700;color:var(--primary);text-decoration:none;text-transform:uppercase;letter-spacing:.06em;">View All</a>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:.625rem;">
+        <div class="log-item">
+          <div style="width:44px;height:44px;border-radius:.625rem;background:rgba(74,222,128,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span class="material-symbols-outlined" style="color:#4ade80;font-size:22px;">nature_people</span>
+          </div>
+          <div style="flex:1;">
+            <p style="font-size:.875rem;font-weight:700;color:var(--text-1);">Morning Walk in Park</p>
+            <p style="font-size:.72rem;color:var(--text-3);">Leo felt calm and engaged.</p>
+          </div>
+          <span style="font-size:.65rem;color:var(--text-3);">9:00 AM</span>
+        </div>
+        <div class="log-item">
+          <div style="width:44px;height:44px;border-radius:.625rem;background:rgba(96,165,250,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span class="material-symbols-outlined" style="color:var(--info);font-size:22px;">menu_book</span>
+          </div>
+          <div style="flex:1;">
+            <p style="font-size:.875rem;font-weight:700;color:var(--text-1);">Story Time Session</p>
+            <p style="font-size:.72rem;color:var(--text-3);">Focused for 10 minutes.</p>
+          </div>
+          <span style="font-size:.65rem;color:var(--text-3);">Yesterday</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Insights teaser -->
+    <div class="anim-up d4" style="padding:.25rem 1rem 1rem;">
+      <a href="11-insights.html" style="text-decoration:none;display:block;">
+        <div style="display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.125rem;">
+          <div style="display:flex;align-items:center;gap:.75rem;">
+            <div style="width:38px;height:38px;border-radius:.625rem;background:rgba(251,191,36,.1);display:flex;align-items:center;justify-content:center;">
+              <span class="material-symbols-outlined" style="color:var(--warning);font-size:20px;">analytics</span>
+            </div>
+            <div>
+              <p style="font-size:.875rem;font-weight:700;color:var(--text-1);">Weekly Insights</p>
+              <p style="font-size:.72rem;color:var(--text-3);">Steady progress · +12% this week</p>
+            </div>
+          </div>
+          <span class="material-symbols-outlined" style="color:var(--text-3);font-size:18px;">chevron_right</span>
+        </div>
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Bottom Nav -->
+  <nav class="bottom-nav">
+    <a class="nav-item active" href="06-dashboard.html">
+      <span class="material-symbols-outlined fill-icon">home</span><span>Home</span>
+    </a>
+    <a class="nav-item" href="07-activity-generator.html">
+      <span class="material-symbols-outlined">auto_awesome</span><span>Activities</span>
+    </a>
+    <a class="nav-item danger" href="08-meltdown-guide.html">
+      <span class="material-symbols-outlined">emergency_home</span><span>Guide</span>
+    </a>
+    <a class="nav-item" href="09-ai-expert-chat.html">
+      <span class="material-symbols-outlined">smart_toy</span><span>Expert</span>
+    </a>
+    <a class="nav-item" href="#more">
+      <span class="material-symbols-outlined">menu</span><span>More</span>
+    </a>
+  </nav>
+
+</div>
+</body>
+</html>

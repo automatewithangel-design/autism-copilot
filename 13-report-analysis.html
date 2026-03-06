@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Report Analysis — Autism Copilot</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Lexend',sans-serif;background:#0d1e18;color:#f0faf6;min-height:100dvh;}
+:root{--primary:#13ecb6;--bg:#0d1e18;--surface:#132b22;--surface-2:#1a3a2e;--border:#1f4a3a;--text-1:#f0faf6;--text-2:#9bbfb2;--text-3:#5a8a7a;--danger:#f87171;--warning:#fbbf24;--radius:.875rem;}
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;vertical-align:middle;line-height:1;}
+.fill-icon{font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;}
+.app{max-width:430px;margin:0 auto;min-height:100dvh;background:var(--bg);border-left:1px solid var(--border);border-right:1px solid var(--border);}
+.app-header{position:sticky;top:0;z-index:40;background:rgba(13,30,24,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:.875rem 1rem;gap:.5rem;}
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:rgba(13,30,24,.93);backdrop-filter:blur(16px);border-top:1px solid var(--border);display:flex;justify-content:space-around;align-items:center;padding:.5rem .5rem 1.4rem;z-index:50;}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:3px;padding:.3rem .6rem;color:var(--text-3);font-size:.625rem;font-weight:500;text-decoration:none;}
+.nav-item span{font-size:22px;}
+.nav-item.active{color:var(--primary);font-weight:700;}
+.nav-item.danger{color:var(--danger);}
+.btn{display:flex;align-items:center;justify-content:center;gap:.5rem;border:none;border-radius:var(--radius);cursor:pointer;font-family:'Lexend',sans-serif;font-weight:700;transition:opacity .15s,transform .15s;}
+.btn:active{transform:scale(.97);}
+.btn-primary{background:var(--primary);color:#0d1e18;box-shadow:0 4px 18px rgba(19,236,182,.28);}
+/* Accordion */
+details{border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);overflow:hidden;}
+details+details{margin-top:.625rem;}
+details summary{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.125rem;cursor:pointer;list-style:none;gap:.875rem;}
+details summary::-webkit-details-marker{display:none;}
+.summary-chevron{transition:transform .25s;color:var(--text-3);}
+details[open] .summary-chevron{transform:rotate(180deg);}
+.details-body{padding:0 1.125rem 1rem;border-top:1px solid var(--border);}
+@keyframes slide-up{from{transform:translateY(14px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.anim-up{animation:slide-up .38s ease both;}
+.d1{animation-delay:.07s;}.d2{animation-delay:.14s;}.d3{animation-delay:.21s;}.d4{animation-delay:.28s;}
+</style>
+</head>
+<body style="background:#0d1e18;">
+<div class="app">
+
+  <div class="app-header">
+    <a href="12-upload-report.html" style="width:36px;height:36px;border-radius:50%;background:rgba(19,236,182,.08);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--primary);text-decoration:none;">
+      <span class="material-symbols-outlined" style="font-size:20px;">arrow_back</span>
+    </a>
+    <h2 style="flex:1;text-align:center;font-size:1rem;font-weight:700;color:var(--text-1);">Report Analysis</h2>
+    <button style="width:36px;height:36px;border-radius:50%;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-2);">
+      <span class="material-symbols-outlined" style="font-size:20px;">share</span>
+    </button>
+  </div>
+
+  <div style="overflow-y:auto;padding-bottom:6rem;">
+
+    <!-- Hero banner -->
+    <div class="anim-up" style="padding:1.125rem 1rem .75rem;">
+      <div style="border-radius:var(--radius);background:linear-gradient(160deg,rgba(19,236,182,.15) 0%,rgba(19,236,182,.04) 100%);border:1px solid rgba(19,236,182,.15);padding:1.5rem;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:-30px;right:-30px;width:100px;height:100px;border-radius:50%;background:rgba(19,236,182,.08);filter:blur(30px);"></div>
+        <div style="position:relative;z-index:1;">
+          <span style="font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;background:rgba(19,236,182,.15);color:var(--primary);padding:.2rem .625rem;border-radius:9999px;border:1px solid rgba(19,236,182,.2);">AI-Powered Insights</span>
+          <h2 style="font-size:1.4rem;font-weight:800;color:var(--text-1);margin-top:.75rem;line-height:1.2;">Summary of Progress</h2>
+          <p style="font-size:.75rem;color:var(--text-3);margin-top:.3rem;">Developmental_v1.pdf · Uploaded Oct 24, 2023</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Intro -->
+    <div class="anim-up d1" style="padding:0 1rem .875rem;">
+      <p style="font-size:.825rem;color:var(--text-2);line-height:1.7;">Our AI carefully reviewed the clinical report and simplified professional terminology into actionable insights to help you support your child's unique journey.</p>
+    </div>
+
+    <!-- Accordion sections -->
+    <div class="anim-up d2" style="padding:0 1rem;">
+
+      <details open>
+        <summary>
+          <div style="display:flex;align-items:center;gap:.75rem;">
+            <div style="width:40px;height:40px;border-radius:.625rem;background:rgba(74,222,128,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <span class="material-symbols-outlined" style="color:#4ade80;font-size:20px;">verified</span>
+            </div>
+            <p style="font-size:.9rem;font-weight:700;color:var(--text-1);">Key Strengths</p>
+          </div>
+          <span class="material-symbols-outlined summary-chevron" style="font-size:22px;">expand_more</span>
+        </summary>
+        <div class="details-body">
+          <ul style="display:flex;flex-direction:column;gap:.625rem;margin-top:.875rem;">
+            <li style="display:flex;gap:.5rem;font-size:.82rem;color:var(--text-2);line-height:1.6;">
+              <span style="color:#4ade80;font-weight:800;flex-shrink:0;">•</span>
+              High engagement in visual learning tasks and puzzle-solving activities.
+            </li>
+            <li style="display:flex;gap:.5rem;font-size:.82rem;color:var(--text-2);line-height:1.6;">
+              <span style="color:#4ade80;font-weight:800;flex-shrink:0;">•</span>
+              Strong long-term memory for specific routines and daily schedules.
+            </li>
+            <li style="display:flex;gap:.5rem;font-size:.82rem;color:var(--text-2);line-height:1.6;">
+              <span style="color:#4ade80;font-weight:800;flex-shrink:0;">•</span>
+              Responds exceptionally well to positive reinforcement and visual rewards.
+            </li>
+          </ul>
+        </div>
+      </details>
+
+      <details style="margin-top:.625rem;">
+        <summary>
+          <div style="display:flex;align-items:center;gap:.75rem;">
+            <div style="width:40px;height:40px;border-radius:.625rem;background:rgba(251,191,36,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <span class="material-symbols-outlined" style="color:var(--warning);font-size:20px;">sensors</span>
+            </div>
+            <p style="font-size:.9rem;font-weight:700;color:var(--text-1);">Sensory Triggers</p>
+          </div>
+          <span class="material-symbols-outlined summary-chevron" style="font-size:22px;">expand_more</span>
+        </summary>
+        <div class="details-body">
+          <p style="font-size:.82rem;color:var(--text-2);line-height:1.7;margin-top:.875rem;">The report identifies specific sensitivities to high-frequency sounds and fluorescent lighting. Transitioning between environments is also noted as a primary stressor.</p>
+          <div style="margin-top:.75rem;background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.15);border-radius:.625rem;padding:.75rem .875rem;">
+            <p style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--warning);margin-bottom:.3rem;">Tip</p>
+            <p style="font-size:.78rem;color:var(--text-2);line-height:1.6;">Try noise-canceling headphones in crowded or loud areas identified in the report.</p>
+          </div>
+        </div>
+      </details>
+
+      <details style="margin-top:.625rem;">
+        <summary>
+          <div style="display:flex;align-items:center;gap:.75rem;">
+            <div style="width:40px;height:40px;border-radius:.625rem;background:rgba(19,236,182,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <span class="material-symbols-outlined" style="color:var(--primary);font-size:20px;">target</span>
+            </div>
+            <p style="font-size:.9rem;font-weight:700;color:var(--text-1);">Recommended Focus</p>
+          </div>
+          <span class="material-symbols-outlined summary-chevron" style="font-size:22px;">expand_more</span>
+        </summary>
+        <div class="details-body">
+          <ul style="display:flex;flex-direction:column;gap:.75rem;margin-top:.875rem;">
+            <li style="display:flex;gap:.5rem;font-size:.82rem;color:var(--text-2);line-height:1.65;">
+              <span style="color:var(--primary);font-weight:800;flex-shrink:0;">1.</span>
+              <span><strong style="color:var(--text-1);">Joint Attention:</strong> Activities that encourage looking at the same object or task together.</span>
+            </li>
+            <li style="display:flex;gap:.5rem;font-size:.82rem;color:var(--text-2);line-height:1.65;">
+              <span style="color:var(--primary);font-weight:800;flex-shrink:0;">2.</span>
+              <span><strong style="color:var(--text-1);">Transition Cues:</strong> Implement a 5-minute visual timer before changing tasks or locations.</span>
+            </li>
+            <li style="display:flex;gap:.5rem;font-size:.82rem;color:var(--text-2);line-height:1.65;">
+              <span style="color:var(--primary);font-weight:800;flex-shrink:0;">3.</span>
+              <span><strong style="color:var(--text-1);">Reward Systems:</strong> Token boards or sticker charts aligned with Leo's visual preferences.</span>
+            </li>
+          </ul>
+        </div>
+      </details>
+
+    </div>
+
+    <!-- AI Expert CTA -->
+    <div class="anim-up d4" style="padding:1.125rem 1rem 1rem;">
+      <div style="background:rgba(19,236,182,.06);border:1px solid rgba(19,236,182,.15);border-radius:var(--radius);padding:1.25rem;">
+        <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.625rem;">
+          <div style="width:40px;height:40px;border-radius:50%;background:rgba(19,236,182,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span class="material-symbols-outlined fill-icon" style="color:var(--primary);font-size:20px;">smart_toy</span>
+          </div>
+          <h3 style="font-size:1rem;font-weight:800;color:var(--text-1);">Have questions?</h3>
+        </div>
+        <p style="font-size:.8rem;color:var(--text-2);line-height:1.65;margin-bottom:.875rem;">Our AI Expert is ready to discuss the specific details of this report and help you act on the recommendations.</p>
+        <a href="09-ai-expert-chat.html" style="text-decoration:none;display:block;">
+          <button class="btn btn-primary" style="width:100%;height:3rem;">
+            Chat about this report
+            <span class="material-symbols-outlined" style="font-size:18px;">arrow_forward</span>
+          </button>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <nav class="bottom-nav">
+    <a class="nav-item" href="06-dashboard.html"><span class="material-symbols-outlined">home</span><span>Home</span></a>
+    <a class="nav-item" href="07-activity-generator.html"><span class="material-symbols-outlined">auto_awesome</span><span>Activities</span></a>
+    <a class="nav-item danger" href="08-meltdown-guide.html"><span class="material-symbols-outlined">emergency_home</span><span>Guide</span></a>
+    <a class="nav-item" href="09-ai-expert-chat.html"><span class="material-symbols-outlined">smart_toy</span><span>Expert</span></a>
+    <a class="nav-item active" href="#"><span class="material-symbols-outlined fill-icon">menu</span><span>More</span></a>
+  </nav>
+
+</div>
+</body>
+</html>

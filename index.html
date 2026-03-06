@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Autism Copilot — Prototype Navigator</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Lexend',sans-serif;background:#0d1e18;color:#f0faf6;min-height:100dvh;padding:2rem 1.25rem 3rem;}
+:root{--primary:#13ecb6;--surface:#132b22;--border:#1f4a3a;--text-2:#9bbfb2;--text-3:#5a8a7a;--danger:#f87171;}
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;vertical-align:middle;line-height:1;}
+.fill-icon{font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;}
+h1{font-size:1.5rem;font-weight:800;margin-bottom:.25rem;}
+.subtitle{font-size:.825rem;color:var(--text-2);margin-bottom:2.5rem;}
+.section-label{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--text-3);margin-bottom:.875rem;padding-left:.25rem;}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:2rem;}
+.page-card{display:flex;align-items:center;gap:.75rem;background:var(--surface);border:1px solid var(--border);border-radius:.875rem;padding:.875rem 1rem;text-decoration:none;transition:border-color .2s,background .2s;}
+.page-card:hover{border-color:var(--primary);background:rgba(19,236,182,.04);}
+.page-num{font-size:.65rem;font-weight:700;color:var(--text-3);min-width:18px;}
+.page-title{font-size:.825rem;font-weight:700;color:#f0faf6;line-height:1.3;}
+.icon-box{width:34px;height:34px;border-radius:.5rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+@keyframes fade{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.page-card{animation:fade .35s ease both;}
+</style>
+</head>
+<body>
+
+<div style="display:flex;align-items:center;gap:.875rem;margin-bottom:.75rem;">
+  <div style="width:44px;height:44px;border-radius:12px;background:rgba(19,236,182,.12);border:1px solid rgba(19,236,182,.2);display:flex;align-items:center;justify-content:center;">
+    <span class="material-symbols-outlined fill-icon" style="color:var(--primary);font-size:24px;">diversity_4</span>
+  </div>
+  <div>
+    <h1>Autism Copilot</h1>
+    <p class="subtitle" style="margin-bottom:0;">Unified Prototype · All 13 Screens</p>
+  </div>
+</div>
+<p class="subtitle">Design System v1.0 · Lexend · #13ecb6 Teal · Dark Theme</p>
+
+<!-- Auth -->
+<p class="section-label">Auth</p>
+<div class="grid">
+  <a href="pages/01-login.html" class="page-card" style="animation-delay:.03s;">
+    <div class="icon-box" style="background:rgba(19,236,182,.1);"><span class="material-symbols-outlined" style="color:var(--primary);font-size:18px;">login</span></div>
+    <div><p class="page-num">01</p><p class="page-title">Login</p></div>
+  </a>
+  <a href="pages/02-create-account.html" class="page-card" style="animation-delay:.06s;">
+    <div class="icon-box" style="background:rgba(19,236,182,.1);"><span class="material-symbols-outlined" style="color:var(--primary);font-size:18px;">person_add</span></div>
+    <div><p class="page-num">02</p><p class="page-title">Create Account</p></div>
+  </a>
+</div>
+
+<!-- Onboarding -->
+<p class="section-label">Onboarding (One-time)</p>
+<div class="grid">
+  <a href="pages/03-onboarding-basic.html" class="page-card" style="animation-delay:.09s;">
+    <div class="icon-box" style="background:rgba(19,236,182,.1);"><span class="material-symbols-outlined" style="color:var(--primary);font-size:18px;">child_care</span></div>
+    <div><p class="page-num">03</p><p class="page-title">Basic Info</p></div>
+  </a>
+  <a href="pages/04-onboarding-sensory.html" class="page-card" style="animation-delay:.12s;">
+    <div class="icon-box" style="background:rgba(19,236,182,.1);"><span class="material-symbols-outlined" style="color:var(--primary);font-size:18px;">touch_app</span></div>
+    <div><p class="page-num">04</p><p class="page-title">Sensory Profile</p></div>
+  </a>
+  <a href="pages/05-onboarding-goals.html" class="page-card" style="animation-delay:.15s;" style="grid-column:1/-1;">
+    <div class="icon-box" style="background:rgba(19,236,182,.1);"><span class="material-symbols-outlined" style="color:var(--primary);font-size:18px;">flag</span></div>
+    <div><p class="page-num">05</p><p class="page-title">Goals & Challenges</p></div>
+  </a>
+</div>
+
+<!-- Core App -->
+<p class="section-label">Core App (Bottom Nav)</p>
+<div class="grid">
+  <a href="pages/06-dashboard.html" class="page-card" style="animation-delay:.18s;">
+    <div class="icon-box" style="background:rgba(19,236,182,.1);"><span class="material-symbols-outlined fill-icon" style="color:var(--primary);font-size:18px;">home</span></div>
+    <div><p class="page-num">06</p><p class="page-title">Home Dashboard</p></div>
+  </a>
+  <a href="pages/07-activity-generator.html" class="page-card" style="animation-delay:.21s;">
+    <div class="icon-box" style="background:rgba(19,236,182,.1);"><span class="material-symbols-outlined" style="color:var(--primary);font-size:18px;">auto_awesome</span></div>
+    <div><p class="page-num">07</p><p class="page-title">Activity Generator</p></div>
+  </a>
+  <a href="pages/08-meltdown-guide.html" class="page-card" style="animation-delay:.24s;border-color:rgba(248,113,113,.2);background:rgba(248,113,113,.03);">
+    <div class="icon-box" style="background:rgba(248,113,113,.1);"><span class="material-symbols-outlined" style="color:var(--danger);font-size:18px;">emergency_home</span></div>
+    <div><p class="page-num" style="color:var(--danger);">08</p><p class="page-title">Meltdown Guide</p></div>
+  </a>
+  <a href="pages/09-ai-expert-chat.html" class="page-card" style="animation-delay:.27s;">
+    <div class="icon-box" style="background:rgba(96,165,250,.1);"><span class="material-symbols-outlined fill-icon" style="color:#60a5fa;font-size:18px;">smart_toy</span></div>
+    <div><p class="page-num">09</p><p class="page-title">AI Expert Chat</p></div>
+  </a>
+</div>
+
+<!-- More -->
+<p class="section-label">More (Secondary Screens)</p>
+<div class="grid">
+  <a href="pages/10-journal.html" class="page-card" style="animation-delay:.30s;">
+    <div class="icon-box" style="background:rgba(19,236,182,.1);"><span class="material-symbols-outlined" style="color:var(--primary);font-size:18px;">book</span></div>
+    <div><p class="page-num">10</p><p class="page-title">Daily Journal</p></div>
+  </a>
+  <a href="pages/11-insights.html" class="page-card" style="animation-delay:.33s;">
+    <div class="icon-box" style="background:rgba(251,191,36,.1);"><span class="material-symbols-outlined" style="color:#fbbf24;font-size:18px;">analytics</span></div>
+    <div><p class="page-num">11</p><p class="page-title">Insights & Trends</p></div>
+  </a>
+  <a href="pages/12-upload-report.html" class="page-card" style="animation-delay:.36s;">
+    <div class="icon-box" style="background:rgba(19,236,182,.1);"><span class="material-symbols-outlined" style="color:var(--primary);font-size:18px;">upload_file</span></div>
+    <div><p class="page-num">12</p><p class="page-title">Upload Report</p></div>
+  </a>
+  <a href="pages/13-report-analysis.html" class="page-card" style="animation-delay:.39s;">
+    <div class="icon-box" style="background:rgba(19,236,182,.1);"><span class="material-symbols-outlined" style="color:var(--primary);font-size:18px;">description</span></div>
+    <div><p class="page-num">13</p><p class="page-title">Report Analysis</p></div>
+  </a>
+</div>
+
+<div style="margin-top:.5rem;padding:1rem;background:var(--surface);border:1px solid var(--border);border-radius:.875rem;">
+  <p style="font-size:.75rem;color:var(--text-3);line-height:1.7;text-align:center;">
+    All pages use: <strong style="color:var(--primary);">Lexend</strong> · <strong style="color:var(--primary);">#13ecb6</strong> primary · <strong style="color:var(--primary);">#0d1e18</strong> background · Unified 5-tab nav
+  </p>
+</div>
+
+</body>
+</html>
