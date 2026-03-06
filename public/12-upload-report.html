@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Upload Report — Autism Copilot</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Lexend',sans-serif;background:#0d1e18;color:#f0faf6;min-height:100dvh;}
+:root{--primary:#13ecb6;--bg:#0d1e18;--surface:#132b22;--surface-2:#1a3a2e;--border:#1f4a3a;--text-1:#f0faf6;--text-2:#9bbfb2;--text-3:#5a8a7a;--danger:#f87171;--success:#4ade80;--warning:#fbbf24;--radius:.875rem;}
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;vertical-align:middle;line-height:1;}
+.fill-icon{font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;}
+.app{max-width:430px;margin:0 auto;min-height:100dvh;background:var(--bg);border-left:1px solid var(--border);border-right:1px solid var(--border);}
+.app-header{position:sticky;top:0;z-index:40;background:rgba(13,30,24,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:.875rem 1rem;gap:.5rem;}
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:rgba(13,30,24,.93);backdrop-filter:blur(16px);border-top:1px solid var(--border);display:flex;justify-content:space-around;align-items:center;padding:.5rem .5rem 1.4rem;z-index:50;}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:3px;padding:.3rem .6rem;color:var(--text-3);font-size:.625rem;font-weight:500;text-decoration:none;}
+.nav-item span{font-size:22px;}
+.nav-item.active{color:var(--primary);font-weight:700;}
+.nav-item.danger{color:var(--danger);}
+.btn{display:flex;align-items:center;justify-content:center;gap:.5rem;border:none;border-radius:var(--radius);cursor:pointer;font-family:'Lexend',sans-serif;font-weight:700;transition:opacity .15s,transform .15s;}
+.btn:active{transform:scale(.97);}
+.btn-primary{background:var(--primary);color:#0d1e18;box-shadow:0 4px 18px rgba(19,236,182,.28);}
+.upload-zone{border:2px dashed var(--border);border-radius:var(--radius);padding:2.5rem 1.5rem;display:flex;flex-direction:column;align-items:center;gap:1rem;cursor:pointer;transition:border-color .2s,background .2s;}
+.upload-zone:hover{border-color:var(--primary);background:rgba(19,236,182,.03);}
+.report-row{display:flex;align-items:center;gap:.875rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:.875rem 1rem;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.spin{animation:spin 1s linear infinite;}
+@keyframes slide-up{from{transform:translateY(14px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.anim-up{animation:slide-up .38s ease both;}
+.d1{animation-delay:.07s;}.d2{animation-delay:.14s;}.d3{animation-delay:.21s;}
+</style>
+</head>
+<body style="background:#0d1e18;">
+<div class="app">
+
+  <div class="app-header">
+    <a href="06-dashboard.html" style="width:36px;height:36px;border-radius:50%;background:rgba(19,236,182,.08);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--primary);text-decoration:none;">
+      <span class="material-symbols-outlined" style="font-size:20px;">arrow_back</span>
+    </a>
+    <h2 style="flex:1;text-align:center;font-size:1rem;font-weight:700;color:var(--text-1);">Upload Report</h2>
+    <div style="width:36px;"></div>
+  </div>
+
+  <div style="overflow-y:auto;padding-bottom:7rem;">
+
+    <!-- Upload zone -->
+    <div class="anim-up" style="padding:1.125rem 1rem .5rem;">
+      <div class="upload-zone" onclick="document.getElementById('file-input').click()">
+        <div style="width:72px;height:72px;border-radius:50%;background:rgba(19,236,182,.1);display:flex;align-items:center;justify-content:center;">
+          <span class="material-symbols-outlined fill-icon" style="color:var(--primary);font-size:36px;">description</span>
+        </div>
+        <div style="text-align:center;">
+          <p style="font-size:1.05rem;font-weight:800;color:var(--text-1);margin-bottom:.3rem;">Upload Assessment</p>
+          <p style="font-size:.8rem;color:var(--text-2);line-height:1.6;max-width:220px;">Drag and drop your PDF or image files here to start the analysis</p>
+        </div>
+        <button class="btn btn-primary" style="padding:0 1.5rem;height:3rem;">
+          <span class="material-symbols-outlined" style="font-size:18px;">upload</span>
+          Select Files
+        </button>
+        <input type="file" id="file-input" accept=".pdf,.jpg,.jpeg,.png" style="display:none;" onchange="handleFile(this)"/>
+      </div>
+    </div>
+
+    <!-- Privacy banner -->
+    <div class="anim-up d1" style="padding:.625rem 1rem;">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.125rem;">
+        <div style="display:flex;align-items:center;gap:.625rem;margin-bottom:.5rem;">
+          <span class="material-symbols-outlined fill-icon" style="color:var(--primary);font-size:22px;">shield_lock</span>
+          <p style="font-size:.875rem;font-weight:700;color:var(--text-1);">Privacy First</p>
+        </div>
+        <p style="font-size:.78rem;color:var(--text-2);line-height:1.65;">Your assessment data is fully encrypted and processed securely. We only use this information to provide personalised guidance for your child.</p>
+        <button style="font-size:.75rem;color:var(--primary);font-weight:700;background:none;border:none;cursor:pointer;margin-top:.625rem;display:flex;align-items:center;gap:.25rem;font-family:'Lexend',sans-serif;">
+          Learn more <span class="material-symbols-outlined" style="font-size:14px;">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Recent uploads -->
+    <div class="anim-up d2" style="padding:.625rem 1rem;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem;">
+        <p style="font-size:.875rem;font-weight:700;color:var(--text-1);">Recent Uploads</p>
+        <button style="font-size:.7rem;font-weight:700;color:var(--primary);background:none;border:none;cursor:pointer;text-transform:uppercase;letter-spacing:.06em;">View all</button>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:.625rem;">
+
+        <div class="report-row">
+          <div style="width:44px;height:44px;border-radius:.625rem;background:rgba(74,222,128,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span class="material-symbols-outlined fill-icon" style="color:#4ade80;font-size:22px;">task</span>
+          </div>
+          <div style="flex:1;min-width:0;">
+            <p style="font-size:.875rem;font-weight:700;color:var(--text-1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Developmental_v1.pdf</p>
+            <p style="font-size:.7rem;color:var(--text-3);">Oct 12, 2023 · 2.4 MB</p>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:.375rem;">
+            <span style="font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;background:rgba(74,222,128,.1);color:#4ade80;padding:.15rem .5rem;border-radius:9999px;border:1px solid rgba(74,222,128,.2);">Analysed</span>
+            <a href="13-report-analysis.html" style="font-size:.65rem;color:var(--primary);font-weight:600;text-decoration:none;">View →</a>
+          </div>
+        </div>
+
+        <div class="report-row">
+          <div style="width:44px;height:44px;border-radius:.625rem;background:rgba(19,236,182,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span class="material-symbols-outlined spin" style="color:var(--primary);font-size:22px;">sync</span>
+          </div>
+          <div style="flex:1;min-width:0;">
+            <p style="font-size:.875rem;font-weight:700;color:var(--text-1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Speech_Therapy_Summary.jpg</p>
+            <p style="font-size:.7rem;color:var(--text-3);">Today, 10:45 AM · 1.1 MB</p>
+          </div>
+          <span style="font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;background:rgba(19,236,182,.1);color:var(--primary);padding:.15rem .5rem;border-radius:9999px;border:1px solid rgba(19,236,182,.2);">Processing</span>
+        </div>
+
+        <div class="report-row" style="opacity:.5;">
+          <div style="width:44px;height:44px;border-radius:.625rem;background:var(--surface-2);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span class="material-symbols-outlined" style="color:var(--text-3);font-size:22px;">description</span>
+          </div>
+          <div style="flex:1;min-width:0;">
+            <p style="font-size:.875rem;font-weight:700;color:var(--text-1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">School_IEP_2023.pdf</p>
+            <p style="font-size:.7rem;color:var(--text-3);">Sep 28, 2023 · 4.5 MB</p>
+          </div>
+          <span style="font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;background:var(--surface-2);color:var(--text-3);padding:.15rem .5rem;border-radius:9999px;border:1px solid var(--border);">Archived</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="anim-up d3" style="padding:.5rem 1rem 1rem;">
+      <a href="13-report-analysis.html" style="text-decoration:none;display:block;">
+        <button class="btn btn-primary" style="width:100%;height:3.25rem;">
+          <span class="material-symbols-outlined fill-icon" style="font-size:20px;">auto_awesome</span>
+          Start AI Analysis
+        </button>
+      </a>
+    </div>
+
+  </div>
+
+  <nav class="bottom-nav">
+    <a class="nav-item" href="06-dashboard.html"><span class="material-symbols-outlined">home</span><span>Home</span></a>
+    <a class="nav-item" href="07-activity-generator.html"><span class="material-symbols-outlined">auto_awesome</span><span>Activities</span></a>
+    <a class="nav-item danger" href="08-meltdown-guide.html"><span class="material-symbols-outlined">emergency_home</span><span>Guide</span></a>
+    <a class="nav-item" href="09-ai-expert-chat.html"><span class="material-symbols-outlined">smart_toy</span><span>Expert</span></a>
+    <a class="nav-item active" href="#"><span class="material-symbols-outlined fill-icon">menu</span><span>More</span></a>
+  </nav>
+
+</div>
+<script>
+function handleFile(input){
+  if(input.files && input.files[0]){
+    const f=input.files[0];
+    alert('Uploading: '+f.name+'\nThis will be processed by the AI.');
+  }
+}
+</script>
+</body>
+</html>
