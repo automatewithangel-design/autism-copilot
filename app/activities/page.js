@@ -1,8 +1,8 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { supabase } from '../../../lib/supabase'
+import { supabase } from '../../lib/supabase'
 import Link from 'next/link'
-import BottomNav from '../../components/BottomNav'
+import BottomNav from '../components/BottomNav'
 
 const SENSORY_OPTIONS = [
   { key: 'Tactile', icon: 'touch_app' },
