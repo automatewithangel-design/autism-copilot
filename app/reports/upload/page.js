@@ -90,9 +90,15 @@ export default function UploadReportPage() {
 
       setStep('analysing')
 
-      // 3. Extract text from PDF using FileReader
+      // 3. Convert PDF to base64 using chunked method (avoids max call stack on large files)
       const arrayBuffer = await file.arrayBuffer()
-      const base64 = btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)))
+      const uint8 = new Uint8Array(arrayBuffer)
+      let binary = ''
+      const chunkSize = 8192
+      for (let i = 0; i < uint8.length; i += chunkSize) {
+        binary += String.fromCharCode(...uint8.subarray(i, i + chunkSize))
+      }
+      const base64 = btoa(binary)
 
       // 4. Send to AI for analysis
       const res = await fetch('/api/analyze-report', {
