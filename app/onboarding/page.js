@@ -3,8 +3,54 @@ import { useState } from 'react'
 import { supabase } from '../../lib/supabase'
 import { useRouter } from 'next/navigation'
 
-const SENSORY_OPTIONS = ['Tactile', 'Visual', 'Auditory', 'Proprioceptive', 'Vestibular']
-const GOAL_OPTIONS = ['Improve communication', 'Build social skills', 'Sensory regulation', 'Daily living skills', 'Emotional regulation', 'Physical activity']
+const SENSORY_OPTIONS = [
+  {
+    key: 'Tactile',
+    emoji: '🖐️',
+    label: 'Touch sensitivity',
+    desc: 'Bothered by clothing tags, textures, or being touched unexpectedly'
+  },
+  {
+    key: 'Auditory',
+    emoji: '👂',
+    label: 'Sound sensitivity',
+    desc: 'Covers ears, distressed by loud noises, crowds or background sounds'
+  },
+  {
+    key: 'Visual',
+    emoji: '👁️',
+    label: 'Light sensitivity',
+    desc: 'Bothered by bright lights, screens, flickering or busy visual environments'
+  },
+  {
+    key: 'Vestibular',
+    emoji: '🌀',
+    label: 'Movement & balance',
+    desc: 'Seeks spinning, swinging or rocking — or avoids it and gets dizzy easily'
+  },
+  {
+    key: 'Proprioceptive',
+    emoji: '💪',
+    label: 'Body awareness',
+    desc: 'Seeks heavy pressure, bear hugs, or crashes into things to feel grounded'
+  },
+  {
+    key: 'Oral',
+    emoji: '👄',
+    label: 'Taste & smell',
+    desc: 'Very picky with food textures, sensitive to strong smells, chews on objects'
+  },
+]
+
+const GOAL_OPTIONS = [
+  { key: 'Improve communication', emoji: '💬', label: 'Improve communication', desc: 'Words, gestures, or AAC devices' },
+  { key: 'Build social skills', emoji: '🤝', label: 'Build social skills', desc: 'Playing with others, taking turns, friendships' },
+  { key: 'Sensory regulation', emoji: '🧘', label: 'Sensory regulation', desc: 'Managing sensory overload and meltdowns' },
+  { key: 'Daily living skills', emoji: '🏠', label: 'Daily living skills', desc: 'Getting dressed, eating, brushing teeth' },
+  { key: 'Emotional regulation', emoji: '💙', label: 'Emotional regulation', desc: 'Understanding and managing feelings' },
+  { key: 'Physical activity', emoji: '🏃', label: 'Physical activity', desc: 'Movement, coordination and motor skills' },
+]
+
 const AVATARS = ['🧒', '👦', '👧', '🧑', '⭐', '🌟']
 
 export default function OnboardingPage() {
@@ -18,11 +64,11 @@ export default function OnboardingPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
-  function toggleSensory(s) {
-    setSensory(prev => prev.includes(s) ? prev.filter(x => x !== s) : [...prev, s])
+  function toggleSensory(key) {
+    setSensory(prev => prev.includes(key) ? prev.filter(x => x !== key) : [...prev, key])
   }
-  function toggleGoal(g) {
-    setGoals(prev => prev.includes(g) ? prev.filter(x => x !== g) : [...prev, g])
+  function toggleGoal(key) {
+    setGoals(prev => prev.includes(key) ? prev.filter(x => x !== key) : [...prev, key])
   }
 
   async function handleFinish() {
@@ -70,7 +116,6 @@ export default function OnboardingPage() {
             <p style={{ fontSize: '.85rem', color: 'var(--text-2)', marginTop: '.375rem', lineHeight: 1.6 }}>We'll use this to personalise every activity and recommendation.</p>
           </div>
 
-          {/* Avatar picker */}
           <div>
             <label className="field-label">Choose an avatar</label>
             <div style={{ display: 'flex', gap: '.625rem', flexWrap: 'wrap' }}>
@@ -105,22 +150,41 @@ export default function OnboardingPage() {
 
       {/* Step 2 — Sensory preferences */}
       {step === 2 && (
-        <div className="anim-up" style={{ flex: 1, padding: '1.5rem 1.25rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+        <div className="anim-up" style={{ flex: 1, padding: '1.5rem 1.25rem', display: 'flex', flexDirection: 'column', gap: '1rem', overflowY: 'auto' }}>
           <div>
-            <h1 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-1)' }}>{childName}'s sensory preferences</h1>
-            <p style={{ fontSize: '.85rem', color: 'var(--text-2)', marginTop: '.375rem', lineHeight: 1.6 }}>Select all that apply. This helps us suggest the right activities.</p>
+            <h1 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-1)' }}>Does {childName} have any of these?</h1>
+            <p style={{ fontSize: '.85rem', color: 'var(--text-2)', marginTop: '.375rem', lineHeight: 1.6 }}>Tap everything that sounds familiar. This helps us suggest the right activities.</p>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '.625rem' }}>
-            {SENSORY_OPTIONS.map(s => (
-              <button key={s} onClick={() => toggleSensory(s)} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1rem', borderRadius: 'var(--radius)', cursor: 'pointer', fontFamily: 'Lexend, sans-serif', fontSize: '.9rem', fontWeight: 600, background: sensory.includes(s) ? 'rgba(19,236,182,.1)' : 'var(--surface)', border: sensory.includes(s) ? '1.5px solid var(--primary)' : '1.5px solid var(--border)', color: sensory.includes(s) ? 'var(--primary)' : 'var(--text-2)', transition: 'all .15s' }}>
-                {s}
-                {sensory.includes(s) && <span className="msi fill" style={{ fontSize: 20, color: 'var(--primary)' }}>check_circle</span>}
+            {SENSORY_OPTIONS.map(opt => (
+              <button key={opt.key} onClick={() => toggleSensory(opt.key)} style={{
+                display: 'flex', alignItems: 'center', gap: '.875rem',
+                padding: '.875rem 1rem', borderRadius: 'var(--radius)',
+                cursor: 'pointer', fontFamily: 'Lexend, sans-serif', textAlign: 'left',
+                background: sensory.includes(opt.key) ? 'rgba(19,236,182,.08)' : 'var(--surface)',
+                border: sensory.includes(opt.key) ? '1.5px solid var(--primary)' : '1.5px solid var(--border)',
+                transition: 'all .15s'
+              }}>
+                <div style={{ width: 44, height: 44, borderRadius: '.75rem', background: sensory.includes(opt.key) ? 'rgba(19,236,182,.15)' : 'var(--surface-2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem', flexShrink: 0 }}>
+                  {opt.emoji}
+                </div>
+                <div style={{ flex: 1 }}>
+                  <p style={{ fontSize: '.9rem', fontWeight: 700, color: sensory.includes(opt.key) ? 'var(--primary)' : 'var(--text-1)', marginBottom: '.2rem' }}>{opt.label}</p>
+                  <p style={{ fontSize: '.75rem', color: 'var(--text-3)', lineHeight: 1.5 }}>{opt.desc}</p>
+                </div>
+                {sensory.includes(opt.key) && (
+                  <span className="msi fill" style={{ fontSize: 22, color: 'var(--primary)', flexShrink: 0 }}>check_circle</span>
+                )}
               </button>
             ))}
           </div>
 
-          <div style={{ display: 'flex', gap: '.75rem', marginTop: 'auto' }}>
+          <p style={{ fontSize: '.72rem', color: 'var(--text-3)', textAlign: 'center', marginTop: '.25rem' }}>
+            Not sure? That's okay — you can update this anytime in settings.
+          </p>
+
+          <div style={{ display: 'flex', gap: '.75rem', marginTop: 'auto', paddingTop: '.5rem' }}>
             <button onClick={() => setStep(1)} className="btn btn-ghost" style={{ flex: 1, height: '3.25rem' }}>Back</button>
             <button onClick={() => setStep(3)} className="btn btn-primary" style={{ flex: 2, height: '3.25rem' }} disabled={sensory.length === 0}>
               Continue <span className="msi" style={{ fontSize: 18 }}>arrow_forward</span>
@@ -131,24 +195,39 @@ export default function OnboardingPage() {
 
       {/* Step 3 — Goals */}
       {step === 3 && (
-        <div className="anim-up" style={{ flex: 1, padding: '1.5rem 1.25rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+        <div className="anim-up" style={{ flex: 1, padding: '1.5rem 1.25rem', display: 'flex', flexDirection: 'column', gap: '1rem', overflowY: 'auto' }}>
           <div>
-            <h1 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-1)' }}>What are your goals?</h1>
+            <h1 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-1)' }}>What would you like to work on?</h1>
             <p style={{ fontSize: '.85rem', color: 'var(--text-2)', marginTop: '.375rem', lineHeight: 1.6 }}>Choose the areas you'd most like to support for {childName}.</p>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '.625rem' }}>
-            {GOAL_OPTIONS.map(g => (
-              <button key={g} onClick={() => toggleGoal(g)} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1rem', borderRadius: 'var(--radius)', cursor: 'pointer', fontFamily: 'Lexend, sans-serif', fontSize: '.9rem', fontWeight: 600, background: goals.includes(g) ? 'rgba(19,236,182,.1)' : 'var(--surface)', border: goals.includes(g) ? '1.5px solid var(--primary)' : '1.5px solid var(--border)', color: goals.includes(g) ? 'var(--primary)' : 'var(--text-2)', transition: 'all .15s' }}>
-                {g}
-                {goals.includes(g) && <span className="msi fill" style={{ fontSize: 20, color: 'var(--primary)' }}>check_circle</span>}
+            {GOAL_OPTIONS.map(opt => (
+              <button key={opt.key} onClick={() => toggleGoal(opt.key)} style={{
+                display: 'flex', alignItems: 'center', gap: '.875rem',
+                padding: '.875rem 1rem', borderRadius: 'var(--radius)',
+                cursor: 'pointer', fontFamily: 'Lexend, sans-serif', textAlign: 'left',
+                background: goals.includes(opt.key) ? 'rgba(19,236,182,.08)' : 'var(--surface)',
+                border: goals.includes(opt.key) ? '1.5px solid var(--primary)' : '1.5px solid var(--border)',
+                transition: 'all .15s'
+              }}>
+                <div style={{ width: 44, height: 44, borderRadius: '.75rem', background: goals.includes(opt.key) ? 'rgba(19,236,182,.15)' : 'var(--surface-2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem', flexShrink: 0 }}>
+                  {opt.emoji}
+                </div>
+                <div style={{ flex: 1 }}>
+                  <p style={{ fontSize: '.9rem', fontWeight: 700, color: goals.includes(opt.key) ? 'var(--primary)' : 'var(--text-1)', marginBottom: '.2rem' }}>{opt.label}</p>
+                  <p style={{ fontSize: '.75rem', color: 'var(--text-3)', lineHeight: 1.5 }}>{opt.desc}</p>
+                </div>
+                {goals.includes(opt.key) && (
+                  <span className="msi fill" style={{ fontSize: 22, color: 'var(--primary)', flexShrink: 0 }}>check_circle</span>
+                )}
               </button>
             ))}
           </div>
 
           {error && <p className="error-msg"><span className="msi" style={{ fontSize: 14 }}>error</span>{error}</p>}
 
-          <div style={{ display: 'flex', gap: '.75rem', marginTop: 'auto' }}>
+          <div style={{ display: 'flex', gap: '.75rem', marginTop: 'auto', paddingTop: '.5rem' }}>
             <button onClick={() => setStep(2)} className="btn btn-ghost" style={{ flex: 1, height: '3.25rem' }}>Back</button>
             <button onClick={handleFinish} className="btn btn-primary" style={{ flex: 2, height: '3.25rem' }} disabled={goals.length === 0 || loading}>
               {loading ? <><div className="spinner" style={{ width: 18, height: 18 }} />&nbsp;Saving…</> : <>Let's go! 🎉</>}
