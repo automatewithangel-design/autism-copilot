@@ -7,7 +7,7 @@ export async function POST(request) {
     const { childName, age, sensory, energy, duration, goals } = await request.json()
 
     const completion = await openai.chat.completions.create({
-      model: 'gpt-4o',
+      model: 'gpt-4o-mini',
       max_tokens: 1200,
       response_format: { type: 'json_object' },
       messages: [
