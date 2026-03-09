@@ -1,0 +1,36 @@
+{
+  "name": "Autism Copilot",
+  "short_name": "Autism Copilot",
+  "description": "AI-powered support for parents of autistic children",
+  "start_url": "https://autism-copilot.vercel.app/dashboard",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0d1e18",
+  "theme_color": "#13ecb6",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-1.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Dashboard"
+    }
+  ],
+  "categories": ["health", "education", "lifestyle"],
+  "lang": "en",
+  "scope": "/"
+}
