@@ -23,7 +23,7 @@ export default function RegisterPage() {
     const { error } = await supabase.auth.signUp({
       email,
       password,
-      options: { emailRedirectTo: `${window.location.origin}/onboarding/basic` }
+      options: { emailRedirectTo: `${window.location.origin}/dashboard` }
     })
     if (error) {
       setError(error.message)
@@ -36,7 +36,7 @@ export default function RegisterPage() {
   async function handleGoogle() {
     await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: `${window.location.origin}/onboarding/basic` }
+      options: { redirectTo: `${window.location.origin}/dashboard` }
     })
   }
 
