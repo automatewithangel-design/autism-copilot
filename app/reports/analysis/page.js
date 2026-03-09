@@ -1,11 +1,11 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { supabase } from '../../../lib/supabase'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import BottomNav from '../../components/BottomNav'
 
-export default function ReportAnalysisPage() {
+function ReportAnalysisContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const reportId = searchParams.get('id')
@@ -26,7 +26,6 @@ export default function ReportAnalysisPage() {
         const { data: report } = await supabase.from('reports').select('*').eq('id', reportId).single()
         if (report) setReport(report)
       } else {
-        // Load most recent complete report
         if (profile) {
           const { data: report } = await supabase
             .from('reports')
@@ -152,7 +151,6 @@ export default function ReportAnalysisPage() {
       </div>
 
       <div className="main-scroll">
-        {/* Hero summary */}
         <div className="anim-up" style={{ padding: '1.25rem 1rem 0' }}>
           <div style={{ background: 'linear-gradient(135deg, rgba(19,236,182,.1), rgba(96,165,250,.06))', border: '1px solid rgba(19,236,182,.2)', borderRadius: 'var(--radius-lg)', padding: '1.25rem', marginBottom: '1.25rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '.625rem', marginBottom: '.875rem' }}>
@@ -165,7 +163,6 @@ export default function ReportAnalysisPage() {
             <p style={{ fontSize: '.875rem', color: 'var(--text-2)', lineHeight: 1.75 }}>{s.summary}</p>
           </div>
 
-          {/* Quick stats */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '.625rem', marginBottom: '1.25rem' }}>
             <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius)', padding: '.875rem', textAlign: 'center' }}>
               <p style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--success)' }}>{s.strengths?.length || 0}</p>
@@ -178,7 +175,6 @@ export default function ReportAnalysisPage() {
           </div>
         </div>
 
-        {/* Accordion sections */}
         <div className="anim-up d1" style={{ padding: '0 1rem', display: 'flex', flexDirection: 'column', gap: '.75rem' }}>
           {sections.map(section => (
             <div key={section.key} style={{ background: 'var(--surface)', border: `1px solid ${expanded[section.key] ? section.border : 'var(--border)'}`, borderRadius: 'var(--radius)', overflow: 'hidden', transition: 'border-color .2s' }}>
@@ -196,7 +192,6 @@ export default function ReportAnalysisPage() {
           ))}
         </div>
 
-        {/* CTA - generate activities from report */}
         <div className="anim-up d2" style={{ padding: '1.25rem 1rem 1.5rem' }}>
           <Link href="/activities" style={{ textDecoration: 'none' }}>
             <div style={{ background: 'linear-gradient(135deg,rgba(19,236,182,.1),rgba(96,165,250,.06))', border: '1px solid rgba(19,236,182,.2)', borderRadius: 'var(--radius)', padding: '1rem', display: 'flex', alignItems: 'center', gap: '.875rem' }}>
@@ -223,5 +218,18 @@ export default function ReportAnalysisPage() {
 
       <BottomNav active="more" />
     </div>
+  )
+}
+
+export default function ReportAnalysisPage() {
+  return (
+    <Suspense fallback={
+      <div style={{ background: '#0d1e18', minHeight: '100dvh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ width: 36, height: 36, borderRadius: '50%', border: '3px solid rgba(19,236,182,.2)', borderTopColor: '#13ecb6', animation: 'spin .7s linear infinite' }} />
+        <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
+      </div>
+    }>
+      <ReportAnalysisContent />
+    </Suspense>
   )
 }
