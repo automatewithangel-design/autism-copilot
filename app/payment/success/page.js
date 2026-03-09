@@ -1,10 +1,10 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { supabase } from '../../../lib/supabase'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 
-export default function PaymentSuccessPage() {
+function PaymentSuccessContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const plan = searchParams.get('plan')
@@ -13,7 +13,6 @@ export default function PaymentSuccessPage() {
 
   useEffect(() => {
     async function verify() {
-      // Poll for Pro status — webhook may take a few seconds
       let attempts = 0
       const maxAttempts = 10
 
@@ -32,9 +31,8 @@ export default function PaymentSuccessPage() {
           setChecking(false)
         } else if (attempts < maxAttempts) {
           attempts++
-          setTimeout(check, 2000) // retry every 2 seconds
+          setTimeout(check, 2000)
         } else {
-          // Webhook may be delayed — show success anyway
           setProfile(data)
           setChecking(false)
         }
@@ -55,22 +53,20 @@ export default function PaymentSuccessPage() {
 
   return (
     <div style={{ background: '#0d1e18', minHeight: '100dvh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '2rem', textAlign: 'center', fontFamily: 'Lexend, sans-serif' }}>
-      <div className="anim-up" style={{ maxWidth: 340 }}>
-        {/* Celebration */}
+      <div style={{ maxWidth: 340 }}>
         <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>🎉</div>
         <div style={{ display: 'inline-block', background: 'rgba(74,222,128,.1)', border: '1px solid rgba(74,222,128,.25)', color: '#4ade80', padding: '.35rem 1rem', borderRadius: '9999px', fontSize: '.72rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.08em', marginBottom: '1.25rem' }}>
           Payment Confirmed
         </div>
 
         <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#f0faf6', lineHeight: 1.2, marginBottom: '.875rem' }}>
-          Welcome to Pro,{profile?.child_name ? ` ${profile.child_name}'s family` : ''}! 🌟
+          Welcome to Pro{profile?.child_name ? `, ${profile.child_name}'s family` : ''}! 🌟
         </h1>
 
         <p style={{ fontSize: '.875rem', color: '#9bbfb2', lineHeight: 1.75, marginBottom: '2rem' }}>
           Your {plan === 'yearly' ? 'yearly' : 'monthly'} subscription is now active. All Pro features are unlocked — including AI report analysis and unlimited personalised activities.
         </p>
 
-        {/* What's unlocked */}
         <div style={{ background: '#132b22', border: '1px solid #1f4a3a', borderRadius: '0.875rem', padding: '1.25rem', marginBottom: '2rem', textAlign: 'left' }}>
           <p style={{ fontSize: '.65rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.1em', color: '#5a8a7a', marginBottom: '.875rem' }}>Now unlocked for you</p>
           {[
@@ -96,5 +92,18 @@ export default function PaymentSuccessPage() {
         </Link>
       </div>
     </div>
+  )
+}
+
+export default function PaymentSuccessPage() {
+  return (
+    <Suspense fallback={
+      <div style={{ background: '#0d1e18', minHeight: '100dvh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ width: 44, height: 44, borderRadius: '50%', border: '3px solid rgba(19,236,182,.2)', borderTopColor: '#13ecb6', animation: 'spin .8s linear infinite' }} />
+        <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
+      </div>
+    }>
+      <PaymentSuccessContent />
+    </Suspense>
   )
 }
