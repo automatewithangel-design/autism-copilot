@@ -12,5 +12,5 @@ export async function GET(request) {
   }
 
   // Check if profile exists — if not, go to onboarding
-  return NextResponse.redirect(new URL('/onboarding/basic', requestUrl.origin))
+  return NextResponse.redirect(new URL('/dashboard', requestUrl.origin))
 }
